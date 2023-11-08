@@ -1,4 +1,55 @@
-{% load static %}
+<!-- JavaScript for oninput validations -->
+<script>
+    // Function to check if a string starts with a special character
+    function startsWithSpecialCharacter(str) {
+        return /^[^a-zA-Z0-9_]/.test(str);
+    }
+
+    // Function to validate username
+    function validateUsername() {
+        const usernameInput = document.getElementById('id_username');
+        const usernameError = document.getElementById('username-error');
+        if (startsWithSpecialCharacter(usernameInput.value)) {
+            usernameError.textContent = 'Username must not start with a special character.';
+        } else {
+            usernameError.textContent = '';
+        }
+    }
+
+    // Function to validate password
+    function validatePassword() {
+        const passwordInput = document.getElementById('id_password1');
+        const passwordError = document.getElementById('password-error');
+        if (passwordInput.value.length < 8) {
+            passwordError.textContent = 'Password must contain at least 8 characters.';
+        } else {
+            passwordError.textContent = '';
+        }
+        validateConfirmPassword();  // Call the confirm password validation
+    }
+
+    // Function to validate confirm password
+    function validateConfirmPassword() {
+        const passwordInput = document.getElementById('id_password1');
+        const confirmPasswordInput = document.getElementById('id_password2');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordError.textContent = 'Passwords do not match.';
+        } else {
+            confirmPasswordError.textContent = '';
+        }
+    }
+
+    // Add event listeners for input fields
+    document.getElementById('id_username').addEventListener('input', validateUsername);
+    document.getElementById('id_password1').addEventListener('input', validatePassword);
+    document.getElementById('id_password2').addEventListener('input', validateConfirmPassword);
+</script>
+
+
+
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,22 +119,4 @@
     </script>
 </body>
 </html>
-
-
-{% comment %} {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'registration.css' %}">
-    <title>User Registration</title>
-</head>
-<body>
-    <form method="post">
-        <h2>User Registration</h2>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-</body>
-</html> {% endcomment %}
+ {% endcomment %}
