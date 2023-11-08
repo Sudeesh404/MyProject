@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
+            position: relative; 
+        }
+
+        header {
+            background-color: #333;
+            padding: 15px 0;
+            color: yellow;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            background:url('/static/assets/logo_kerala.png')
+            position: relative; 
+        }
+
+        h1 {
+            margin: 0;
+
+        }
+        #logo {
+            position: absolute; 
+            top: 200px;
+            left: 400px;
+            max-width: 1000px; 
+        }
+
+        nav {
+            margin-to1: 15px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: right;
+            align-items: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <div>
+            <nav class="button-container">
+        </div>
+            <a href="{% url 'index' %}" class="button">Home</a>
+            <a href="{% url 'update_profile' %}" class="button">Update Profile</a>
+            <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
+            <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
+            <a href="{% url 'logout' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+        </nav>
+    </header>
+    <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo">
+    <p></p>
+</body>
+</html>

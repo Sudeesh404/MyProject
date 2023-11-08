@@ -1,0 +1,98 @@
+{% load static %} 
+<html lang="en">
+<head>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
+        }
+
+        .complaint-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        img {
+            max-width: 100px;
+            border-radius: 8px;
+        
+        }
+
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+<div class="complaint-box" align="center">
+    <h2>Your Filed Complaints</h2>
+    {% if user_complaints %}
+        <table border="3">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Place</th>
+                    <th>Description</th>
+                    <th>Physical Evidence</th>
+                    <th>Photo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in user_complaints %}
+                    <tr>
+                        <td>{{ complaint.name }}</td>
+                        <td>{{ complaint.place }}</td>
+                        <td>{{ complaint.Description }}</td>
+                        <td>{{ complaint.PhysicalEvidence }}</td>
+                        <td>
+                            {% if complaint.fileUpload %}
+                                <img src="{{ complaint.fileUpload.url }}" alt="Evidence Photo" style="max-width: 100px;">
+                            {% else %}
+                                No photo available
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No complaints filed yet.</p>
+    {% endif %}
+{% endblock %}
+</div>
+</body>
+</html>
