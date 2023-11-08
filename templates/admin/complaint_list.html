@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Complaint List</title>
+    <style>
+        /* CSS for the complaint table */
+        .complaint-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .complaint-table th, .complaint-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .complaint-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .complaint-table th {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Complaints</h1>
+    <table class="complaint-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Place</th>
+                <th>Description</th>
+                <th>Physical Evidence</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.name }}</td>
+                    <td>{{ complaint.place }}</td>
+                    <td>{{ complaint.Description }}</td>
+                    <td>{{ complaint.PhysicalEvidence }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "admin.css" %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <div class="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="{% url 'user_account' %}">Users</a>
+        <a href="{% url "complaint_list" %}">Complaints</a>
+        <!-- Add more sidebar options as needed -->
+    </div>
+    <div class="content">
+            <div class="info-box">
+                <div class="box-header">
+                    <h2>Users</h2>
+                </div>
+                <div class="box-content">
+                    <p>Number of Users: 1000</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="box-header">
+                    <h2>Complaints</h2>
+                </div>
+                <div class="box-content">
+                    <p>Number of Complaints: 50</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="box-header">
+                    <h2>Most Wanted</h2>
+                </div>
+                <div class="box-content">
+                    <p>Number of People: 25</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="box-header">
+                    <h2>Solved Complaints</h2>
+                </div>
+                <div class="box-content">
+                    <p>50</p>
+                </div>
+            </div>
+            <div style="width: 70%; height: 60%;">
+            <canvas id="crimeChart"></canvas>
+            </div> 
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                // Static data for demonstration
+                const months = ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October', 'November'];
+                const crimes = [10, 5, 12, 8, 15, 7, 6, 11, 9, 5, 3];
+            
+                // Get the canvas element
+                const ctx = document.getElementById('crimeChart').getContext('2d');
+            
+                // Create the bar chart
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Crimes',
+                            data: crimes,
+                            backgroundColor: 'red',
+                            borderColor: 'red',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            
+        
+    </div>
+</body>
+</html>

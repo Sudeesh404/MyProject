@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .models import Complaint
-# from .models import UserProfile
+from .models import User
 from django.contrib.auth.forms import UserChangeForm
+from .models import UserProfile
 
 
 class RegistrationForm(UserCreationForm):
@@ -26,10 +27,10 @@ class CustomUserChangeForm(UserChangeForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
 
-# class UserProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = UserProfile
-#         fields = ['mobile', 'address']
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['mobile', 'address']
 
 
 class ComplaintForm(forms.ModelForm):  

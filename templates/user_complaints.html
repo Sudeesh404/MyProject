@@ -80,8 +80,8 @@
                         <td>{{ complaint.PhysicalEvidence }}</td>
                         <td>
                             {% if complaint.fileUpload %}
-                                <img src="{{ complaint.fileUpload.url }}" alt="Evidence Photo" style="max-width: 100px;">
-                            {% else %}
+                            <img src="{{ complaint.fileUpload.url }}" alt="Evidence Photo" style="max-width: 100px;">
+                        {% else %}
                                 No photo available
                             {% endif %}
                         </td>

@@ -73,7 +73,7 @@
             <nav class="button-container">
         </div>
             <a href="{% url 'index' %}" class="button">Home</a>
-            <a href="{% url 'update_profile' %}" class="button">Update Profile</a>
+            {% comment %} <a href="{% url 'update_profile' %}" class="button">Update Profile</a> {% endcomment %}
             <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
             <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
             <a href="{% url 'logout' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
