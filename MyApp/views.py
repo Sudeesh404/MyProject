@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .forms import ComplaintForm
@@ -14,6 +13,9 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.db.models import Q
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+
 
 def register(request):
     if request.method == 'POST':
@@ -27,6 +29,9 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 # Create your views here.
+
+@never_cache
+@login_required
 def index(request):
     
     return render(request,'index.html')
@@ -49,10 +54,15 @@ def login_view(request):
     
     return render(request, 'login.html')
 
-@login_required
+@login_required(login_url="/login/")
 def user_landing(request):
     # Your view logic goes here
     return render(request, 'user_landing.html')
+
+
+
+def logout_view(request):
+    logout(request)
 
 @login_required
 def update_profile(request):
@@ -92,8 +102,9 @@ def logout_view(request):
     return redirect('login')  
 
 
+@never_cache
+@login_required
 def admindashboard(request):
-    # Add any data you want to pass to the admin dashboard template
     context = {
         # Add context data here
     }

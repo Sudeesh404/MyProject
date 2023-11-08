@@ -16,7 +16,7 @@ urlpatterns = [
     path('register/',views.register, name='register'),
     path('user_landing/', user_landing, name='user_landing'),
     path("dashboard/",admindashboard,name="dashboard"),
-    path('user_account',user_account,name='user_account'),
+    path('user_account/',user_account,name='user_account'),
     path("file_complaint", file_complaint, name='file_complaint'), 
     path('logout/', logout_view, name='logout'),
     path('complaints/', views.complaint_list, name='complaint_list'),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('activate_user/<int:user_id>/', views.activate_user, name='activate_user'),
     path('deactivate_user/<int:user_id>/', views.deactivate_user, name='deactivate_user'),
+    path('logout_view/',views.logout_view,name="logout_view")
 ]

@@ -77,7 +77,7 @@
             <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
             <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
             <a href="{% url 'logout' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+            <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
                 {% csrf_token %}
             </form>
         </nav>
