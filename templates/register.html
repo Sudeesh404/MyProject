@@ -1,5 +1,33 @@
-<!-- JavaScript for oninput validations -->
-<script>
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'registration.css' %}">
+    <title>User Registration</title>
+</head>
+<body>
+    <form method="post" id="registration-form" action="{% url 'register' %}">
+        <div class="card">
+        <h2>User Registration</h2>
+        {% csrf_token %}
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        <div class="error-container" id="username-error"></div> <!-- Error container for username -->
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        <div class="error-container" id="email-error"></div> <!-- Error container for email -->
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        <div class="error-container" id="password-error"></div> <!-- Error container for password -->
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        <div class="error-container" id="confirm-password-error"></div> <!-- Error container for confirm password -->
+        <button type="submit" id="submit-button">Register</button>
+    </div>
+</form>
+{% comment %} <script>
     // Function to check if a string starts with a special character
     function startsWithSpecialCharacter(str) {
         return /^[^a-zA-Z0-9_]/.test(str);
@@ -46,77 +74,4 @@
     document.getElementById('id_password1').addEventListener('input', validatePassword);
     document.getElementById('id_password2').addEventListener('input', validateConfirmPassword);
 </script>
-
-
-
-{% comment %} {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'registration.css' %}">
-    <title>User Registration</title>
-</head>
-<body>
-    <form method="post" id="registration-form" action="{% url 'register' %}">
-        <div class="card">
-        <h2>User Registration</h2>
-        {% csrf_token %}
-        {{ form.username.label_tag }}
-        {{ form.username }}
-        <div class="error-container" id="username-error"></div> <!-- Error container for username -->
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        <div class="error-container" id="email-error"></div> <!-- Error container for email -->
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-        <div class="error-container" id="password-error"></div> <!-- Error container for password -->
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-        <div class="error-container" id="confirm-password-error"></div> <!-- Error container for confirm password -->
-        <button type="submit" id="submit-button">Register</button>
-        </div>
-    </form>
-    
-    <!-- JavaScript for oninput validations -->
-    <script>
-        // Function to check if a string starts with a special character
-        function startsWithSpecialCharacter(str) {
-            return /^[^a-zA-Z0-9_]/.test(str);
-        }
-
-        // Function to validate username
-        function validateUsername() {
-            const usernameInput = document.getElementById('id_username');
-            const usernameError = document.getElementById('username-error');
-            if (startsWithSpecialCharacter(usernameInput.value)) {
-                usernameError.textContent = 'Username must not start with a special character.';
-            } else {
-                usernameError.textContent = '';
-            }
-        }
-
-        // Function to validate password
-        function validatePassword() {
-            const passwordInput = document.getElementById('id_password1');
-            const passwordError = document.getElementById('password-error');
-            if (passwordInput.value.length < 8) {
-                passwordError.textContent = 'Password must contain at least 8 characters.';
-            } else {
-                passwordError.textContent = '';
-            }  if (passwordInput.value !== confirmPasswordInput.value) {
-                confirmPasswordError.textContent = 'Passwords do not match.';
-            } else {
-                confirmPasswordError.textContent = '';
-            }
-
-        }
-
-        // Add event listeners for input fields
-        document.getElementById('id_username').addEventListener('input', validateUsername);
-        document.getElementById('id_password1').addEventListener('input', validatePassword);
-    </script>
-</body>
-</html>
- {% endcomment %}
+    {% endcomment %}
