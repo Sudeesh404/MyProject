@@ -15,6 +15,10 @@ from django.utils.html import strip_tags
 from django.db.models import Q
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
+from reportlab.pdfgen import canvas
+from io import BytesIO
+
 
 
 def register(request):
@@ -30,8 +34,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 # Create your views here.
 
-@never_cache
-@login_required
+
 def index(request):
     
     return render(request,'index.html')
@@ -54,7 +57,8 @@ def login_view(request):
     
     return render(request, 'login.html')
 
-@login_required(login_url="/login/")
+@login_required
+@never_cache
 def user_landing(request):
     # Your view logic goes here
     return render(request, 'user_landing.html')
@@ -77,6 +81,8 @@ def update_profile(request):
 
     return render(request, 'update_profile.html', {'form': form})
 
+@login_required
+@never_cache
 def file_complaint(request):
     if request.method == 'POST':
         form = ComplaintForm(request.POST, request.FILES)
@@ -89,13 +95,11 @@ def file_complaint(request):
 
     return render(request, 'file_complaint.html', {'form': form})
 
+@login_required
+@never_cache
 def view_user_complaints(request):
     user_complaints = Complaint.objects.filter(user=request.user)
     return render(request, 'user_complaints.html', {'user_complaints': user_complaints})
-
-
-
-
 
 def logout_view(request):
     request.session.flush() 
@@ -152,3 +156,25 @@ def deactivate_user(request, user_id):
 def complaint_list(request):
     complaints = Complaint.objects.all()
     return render(request, 'admin/complaint_list.html', {'complaints': complaints})
+
+def generate_pdf(complaint_instance):
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+    # Draw PDF content based on complaint_instance
+    p.drawString(100, 800, f"Complaint ID: {complaint_instance.id}")
+    p.drawString(100, 780, f"Name: {complaint_instance.name}")
+    # Add more fields as needed
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+    return buffer
+
+def generate_pdf_view(request, complaint_id):
+    complaint_instance = get_object_or_404(Complaint, id=complaint_id)
+    pdf_buffer = generate_pdf(complaint_instance)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="complaint_{complaint_instance.id}.pdf"'
+    response.write(pdf_buffer.getvalue())
+
+    return response

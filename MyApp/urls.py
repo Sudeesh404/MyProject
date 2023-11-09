@@ -8,6 +8,7 @@ from .views import view_user_complaints
 from .views import file_complaint
 from .views import admindashboard
 from .views import user_account
+from .views import generate_pdf_view
 
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     path("file_complaint", file_complaint, name='file_complaint'), 
     path('logout/', logout_view, name='logout'),
     path('complaints/', views.complaint_list, name='complaint_list'),
+    path('generate_pdf/<int:complaint_id>/', generate_pdf_view, name='generate_pdf'),
     path('view_user_complaints/', view_user_complaints, name='view_user_complaints'),
     path('login/', views.login_view, name='login'),
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),

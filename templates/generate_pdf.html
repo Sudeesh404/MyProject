@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PDF</title>
+</head>
+<body>
+    <h1>Generate PDF for Complaint #{{ complaint_instance.id }}</h1>
+    <a href="{% url 'generate_pdf' complaint_instance.id %}" target="_blank">Download PDF</a>
+    <!-- Add more content or options as needed -->
+</body>
+</html>

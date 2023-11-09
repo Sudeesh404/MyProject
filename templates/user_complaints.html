@@ -2,58 +2,7 @@
 <html lang="en">
 <head>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
-        }
-
-        .complaint-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #007BFF;
-            color: #fff;
-        }
-
-        img {
-            max-width: 100px;
-            border-radius: 8px;
-        
-        }
-
-        p {
-            color: #555;
-        }
+        /* Your existing styles here */
     </style>
 </head>
 <body>
@@ -69,6 +18,7 @@
                     <th>Description</th>
                     <th>Physical Evidence</th>
                     <th>Photo</th>
+                    <th>Action</th> <!-- Add a new column for the action -->
                 </tr>
             </thead>
             <tbody>
@@ -80,10 +30,16 @@
                         <td>{{ complaint.PhysicalEvidence }}</td>
                         <td>
                             {% if complaint.fileUpload %}
-                            <img src="{{ complaint.fileUpload.url }}" alt="Evidence Photo" style="max-width: 100px;">
-                        {% else %}
+                                <img src="{{ complaint.fileUpload.url }}" alt="Evidence Photo" style="max-width: 100px;">
+                            {% else %}
                                 No photo available
                             {% endif %}
+                        </td>
+                        <td>
+                            <!-- Add a button to generate PDF for each complaint -->
+                            <a href="{% url 'generate_pdf' complaint.id %}" target="_blank">
+                                Generate PDF
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -92,7 +48,9 @@
     {% else %}
         <p>No complaints filed yet.</p>
     {% endif %}
-{% endblock %}
 </div>
+{% endblock %}
 </body>
 </html>
+
+
