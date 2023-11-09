@@ -18,6 +18,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from reportlab.pdfgen import canvas
 from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+#from django.utils import timezone
 
 
 
@@ -157,24 +160,25 @@ def complaint_list(request):
     complaints = Complaint.objects.all()
     return render(request, 'admin/complaint_list.html', {'complaints': complaints})
 
-def generate_pdf(complaint_instance):
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer)
-    # Draw PDF content based on complaint_instance
-    p.drawString(100, 800, f"Complaint ID: {complaint_instance.id}")
-    p.drawString(100, 780, f"Name: {complaint_instance.name}")
-    # Add more fields as needed
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return buffer
-
-def generate_pdf_view(request, complaint_id):
+def generate_pdf(request, complaint_id):
+    # Get the complaint_instance based on complaint_id
     complaint_instance = get_object_or_404(Complaint, id=complaint_id)
-    pdf_buffer = generate_pdf(complaint_instance)
 
+    # Context for the template
+    context = {'complaint_instance': complaint_instance}
+
+    # Render the template
+    template = get_template('generate_pdf.html')
+    html = template.render(context)
+
+    # Create a PDF response
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="complaint_{complaint_instance.id}.pdf"'
-    response.write(pdf_buffer.getvalue())
+    response['Content-Disposition'] = f'filename=complaint_{complaint_instance.id}.pdf'
+
+    # Generate PDF using xhtml2pdf library
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', content_type='text/plain')
 
     return response

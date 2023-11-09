@@ -6,8 +6,14 @@
     <title>Generate PDF</title>
 </head>
 <body>
-    <h1>Generate PDF for Complaint #{{ complaint_instance.id }}</h1>
+    <h1>ECHO - ONLINE CRIME REPORTING</h1>
+    <p>Dear user,</p>
+    <p>Your complaint with Complaint ID {{ complaint_instance.id }} submitted on {{ complaint_instance.submission_datetime|date:"F j, Y H:i:s" }} has been successfully submitted to ECHO.</p>
+    <p>We thank you for bringing this to our attention.</p>
+    <p>We appreciate your cooperation. If you have any further questions or concerns, please feel free to contact us.</p>
     <a href="{% url 'generate_pdf' complaint_instance.id %}" target="_blank">Download PDF</a>
     <!-- Add more content or options as needed -->
 </body>
 </html>
+
+

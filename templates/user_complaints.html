@@ -2,7 +2,69 @@
 <html lang="en">
 <head>
     <style>
-        /* Your existing styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
+        }
+
+        .complaint-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        img {
+            max-width: 100px;
+            border-radius: 8px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        /* Button Styles */
+        .pdf-button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.1s;
+            cursor: pointer;
+        }
+
+        .pdf-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -16,7 +78,7 @@
                     <th>Name</th>
                     <th>Place</th>
                     <th>Description</th>
-                    <th>Physical Evidence</th>
+                    <th>Evidence</th>
                     <th>Photo</th>
                     <th>Action</th> <!-- Add a new column for the action -->
                 </tr>
@@ -37,8 +99,8 @@
                         </td>
                         <td>
                             <!-- Add a button to generate PDF for each complaint -->
-                            <a href="{% url 'generate_pdf' complaint.id %}" target="_blank">
-                                Generate PDF
+                            <a class='pdf-button' href="{% url 'generate_pdf' complaint.id %}" target="_blank">
+                                print
                             </a>
                         </td>
                     </tr>
