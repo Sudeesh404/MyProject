@@ -11,6 +11,7 @@ from .views import user_account
 from .views import generate_pdf
 
 
+
 urlpatterns = [
     
     path('',views.index,name="index"),
@@ -19,7 +20,7 @@ urlpatterns = [
     path("dashboard/",admindashboard,name="dashboard"),
     path('user_account/',user_account,name='user_account'),
     path("file_complaint", file_complaint, name='file_complaint'), 
-    path('logout/', logout_view, name='logout'),
+    path('logout_view/', logout_view, name='logout_view'),
     path('complaints/', views.complaint_list, name='complaint_list'),
     path('generate_pdf/<int:complaint_id>/', generate_pdf, name='generate_pdf'),
     path('view_user_complaints/', view_user_complaints, name='view_user_complaints'),
@@ -30,5 +31,8 @@ urlpatterns = [
     path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('activate_user/<int:user_id>/', views.activate_user, name='activate_user'),
     path('deactivate_user/<int:user_id>/', views.deactivate_user, name='deactivate_user'),
-    path('logout_view/',views.logout_view,name="logout_view")
+     path('submit_feedback/', views.submit_feedback, name='submit_feedback'),
+    path('feedback_thankyou/', views.feedback_thankyou, name='feedback_thankyou'), 
+    path("adminfeedback",views.adminfeedback,name='adminfeedback'),
+
 ]

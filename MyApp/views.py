@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import ComplaintForm
 from .models import Complaint 
 from .models import UserProfile
+from .models import Feedback
 from .forms import UserProfileForm,CustomUserChangeForm
 from .forms import RegistrationForm
 from .models import User
@@ -20,7 +21,7 @@ from reportlab.pdfgen import canvas
 from io import BytesIO
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-#from django.utils import timezone
+from django.utils import timezone
 
 
 
@@ -67,10 +68,6 @@ def user_landing(request):
     return render(request, 'user_landing.html')
 
 
-
-def logout_view(request):
-    logout(request)
-
 @login_required
 def update_profile(request):
     if request.method == 'POST':
@@ -103,10 +100,6 @@ def file_complaint(request):
 def view_user_complaints(request):
     user_complaints = Complaint.objects.filter(user=request.user)
     return render(request, 'user_complaints.html', {'user_complaints': user_complaints})
-
-def logout_view(request):
-    request.session.flush() 
-    return redirect('login')  
 
 
 @never_cache
@@ -164,9 +157,9 @@ def generate_pdf(request, complaint_id):
     # Get the complaint_instance based on complaint_id
     complaint_instance = get_object_or_404(Complaint, id=complaint_id)
 
+    now = timezone.now()
     # Context for the template
-    context = {'complaint_instance': complaint_instance}
-
+    context = {'complaint_instance': complaint_instance,'now': now}
     # Render the template
     template = get_template('generate_pdf.html')
     html = template.render(context)
@@ -182,3 +175,37 @@ def generate_pdf(request, complaint_id):
         return HttpResponse('Error generating PDF', content_type='text/plain')
 
     return response
+
+
+@never_cache
+@login_required(login_url="login")
+def submit_feedback(request):
+    if request.method == "POST":
+        feedback_message = request.POST.get('feedback_message')
+        if feedback_message:
+            Feedback.objects.create(user=request.user, message=feedback_message)
+            # You can add additional logic here (e.g., sending a confirmation email)
+            return redirect('feedback_thankyou')
+
+    return render(request, 'admin/feedback_form.html')
+
+
+def feedback_thankyou(request):
+     return render(request,'admin/feedback_thankyou.html')
+
+
+from django.shortcuts import render
+from .models import Feedback
+
+def adminfeedback(request):
+    feedback_list = Feedback.objects.all()
+    return render(request, 'admin/adminfeedback.html', {'feedback_list': feedback_list})
+
+
+# def logout_view(request):
+#     request.session.flush() 
+#     return redirect('login')  
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

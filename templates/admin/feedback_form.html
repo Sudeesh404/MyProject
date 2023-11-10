@@ -1,0 +1,61 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Feedback</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    h3 {
+        color: #007BFF;
+    }
+    
+    form {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+    
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box; /* Ensure padding is included in the width */
+    }
+    
+    button[type="submit"] {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    
+    </style>
+</head>
+<body><center><br><br><br><br><br>
+    <h3>Submit Feedback</h3></center>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="feedback_message" rows="5" cols="50" placeholder="Enter your feedback here" required></textarea>
+        <br>
+        <button type="submit">Submit Feedback</button>
+    </form>
+</body>
+</html>

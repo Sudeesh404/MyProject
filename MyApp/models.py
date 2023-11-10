@@ -49,5 +49,13 @@ class UserProfile(models.Model):
     mobile = models.CharField(max_length=15,blank=True)
     address = models.TextField(max_length=100)
 
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.user.username} at {self.created_at}"
+
 
 

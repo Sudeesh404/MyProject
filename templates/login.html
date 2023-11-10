@@ -13,12 +13,12 @@
         <p class="error-message">{{ error_message }}</p>
         {% endif %}
         {% if not request.user.is_authenticated %}
-        <script>
+        {% comment %} <script>
             // Show an alert box when the user is logged out
             window.onload = function() {
                 alert('You have been successfully logged out.');
             };
-        </script>
+        </script> {% endcomment %}
         {% endif %}
         <form method="post">
             {% csrf_token %}

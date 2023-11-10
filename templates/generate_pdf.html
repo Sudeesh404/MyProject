@@ -3,17 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate PDF</title>
+    <title>PDF</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pdf-container {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            display: inline-block;
+        }
+
+        h1 {
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        p{
+            text-align:left;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>ECHO - ONLINE CRIME REPORTING</h1>
-    <p>Dear user,</p>
-    <p>Your complaint with Complaint ID {{ complaint_instance.id }} submitted on {{ complaint_instance.submission_datetime|date:"F j, Y H:i:s" }} has been successfully submitted to ECHO.</p>
-    <p>We thank you for bringing this to our attention.</p>
-    <p>We appreciate your cooperation. If you have any further questions or concerns, please feel free to contact us.</p>
-    <a href="{% url 'generate_pdf' complaint_instance.id %}" target="_blank">Download PDF</a>
-    <!-- Add more content or options as needed -->
+    <div class='pdf-container'>
+        <h1>ECHO - ONLINE CRIME REPORTING</h1>
+        <p>Dear user,</p>
+        <p>Your complaint with <b>Complaint ID {{ complaint_instance.id }}</b> has been successfully submitted to ECHO on <b>{{ now|date:"F j, Y H:i:s" }}</b>.
+        We thank you for bringing this to our attention. We appreciate your cooperation. If you have any further questions or concerns, please feel free to contact us.</p>
+        <p>Email  : echocrimereporting@gmail.com</p>
+        <p>Mobile :  8767890918</p>
+    </div>
 </body>
 </html>
-
-
