@@ -45,3 +45,17 @@ class CriminalForm(forms.ModelForm):
     class Meta:
         model = Criminal
         fields = ['name', 'photo', 'description']
+
+
+from .models import MissingPerson
+
+class MissingPersonForm(forms.ModelForm):
+    class Meta:
+        model = MissingPerson
+        fields = ['name', 'age', 'photo', 'gender', 'description']
+
+
+class UpdateStatusForm(forms.ModelForm):
+    class Meta:
+        model = MissingPerson
+        fields = ['status']

@@ -23,8 +23,6 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
 
-
-
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -229,3 +227,37 @@ def add_criminal(request):
 def criminal_details(request, criminal_id):
     criminal = Criminal.objects.get(pk=criminal_id)
     return render(request, 'criminal_details.html', {'criminal': criminal})
+
+# views.py
+from django.shortcuts import render, redirect
+from .models import MissingPerson
+from .forms import MissingPersonForm
+
+def missing_person_list(request):
+    missing_persons = MissingPerson.objects.all()
+    return render(request, 'missing_person_list.html', {'missing_persons': missing_persons})
+
+def report_missing_person(request):
+    if request.method == 'POST':
+        form = MissingPersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_landing')
+    else:
+        form = MissingPersonForm()
+
+    return render(request, 'report_missing_person.html', {'form': form})
+from .forms import UpdateStatusForm
+
+def missing_person_list(request):
+    missing_persons = MissingPerson.objects.all()
+    form = UpdateStatusForm()
+
+    if request.method == 'POST':
+        form = UpdateStatusForm(request.POST)
+        if form.is_valid():
+            # Update the status here
+            status = form.cleaned_data['status']
+            # Handle the status update logic
+
+    return render(request, 'missing_person_list.html', {'missing_persons': missing_persons, 'form': form})

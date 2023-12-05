@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b2;
+    }
+  </style>
+
+  <h2>Missing Persons List</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <!-- Add other fields as needed -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for missing_person in missing_persons %}
+        <tr>
+          <td>{{ missing_person.name }}</td>
+          <td>{{ missing_person.status }}</td>
+          <!-- Add other fields as needed -->
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Update Status</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Status</button>
+  </form>
+{% endblock %}

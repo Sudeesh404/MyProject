@@ -67,12 +67,13 @@ class Criminal(models.Model):
     def __str__(self):
         return self.name
     
-    class MissingPerson(models.Model):
+class MissingPerson(models.Model):
     name = models.CharField(max_length=255)
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
     description = models.TextField()
-    status = models.CharField(max_length=20, choices=[('searching', 'Searching'), ('found', 'Found')], default='searching')
+    photo = models.ImageField(upload_to='missing_persons/', null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[('reported', 'Reported'),('searching', 'Searching'), ('found', 'Found')], default='reported')
 
     def __str__(self):
         return self.name
