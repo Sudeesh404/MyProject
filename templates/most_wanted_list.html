@@ -1,0 +1,8 @@
+{% for criminal in criminals %}
+    <div>
+        <img src="{{ criminal.photo.url }}" alt="{{ criminal.name }}">
+        <h3>{{ criminal.name }}</h3>
+        <p>{{ criminal.description }}</p>
+        <a href="{% url 'criminal_details' criminal.id %}">View Details</a>
+    </div>
+{% endfor %}
