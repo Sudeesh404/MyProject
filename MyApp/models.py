@@ -57,5 +57,13 @@ class Feedback(models.Model):
     def __str__(self):
         return f"Feedback from {self.user.username} at {self.created_at}"
 
+from django.db import models
 
+class Criminal(models.Model):
+    name = models.CharField(max_length=255)
+    photo = models.ImageField(upload_to='criminal_photos/')
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
