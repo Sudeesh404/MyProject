@@ -102,8 +102,6 @@ def view_user_complaints(request):
     return render(request, 'user_complaints.html', {'user_complaints': user_complaints})
 
 
-@never_cache
-@login_required
 def admindashboard(request):
     context = {
         # Add context data here
@@ -202,10 +200,10 @@ def adminfeedback(request):
     return render(request, 'admin/adminfeedback.html', {'feedback_list': feedback_list})
 
 
-# def logout_view(request):
-#     request.session.flush() 
-#     return redirect('login')  
-
 def logout_view(request):
-    logout(request)
-    return redirect('login')
+    request.session.flush() 
+    return redirect('login')  
+
+# def logout_view(request):
+#     logout(request)
+#     return redirect('login')
