@@ -38,3 +38,10 @@ class ComplaintForm(forms.ModelForm):
         model = Complaint
         fields = ['name', 'place', 'Description', 'PhysicalEvidence', 'fileUpload']
         widgets ={'user':forms.HiddenInput}
+
+from .models import Criminal
+
+class CriminalForm(forms.ModelForm):
+    class Meta:
+        model = Criminal
+        fields = ['name', 'photo', 'description']
