@@ -66,4 +66,14 @@ class Criminal(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class MissingPerson(models.Model):
+    name = models.CharField(max_length=255)
+    age = models.IntegerField()
+    gender = models.CharField(max_length=10)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=[('searching', 'Searching'), ('found', 'Found')], default='searching')
+
+    def __str__(self):
+        return self.name
 

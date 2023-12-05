@@ -1,8 +1,55 @@
-{% for criminal in criminals %}
-    <div>
-        <img src="{{ criminal.photo.url }}" alt="{{ criminal.name }}">
-        <h3>{{ criminal.name }}</h3>
-        <p>{{ criminal.description }}</p>
-        <a href="{% url 'criminal_details' criminal.id %}">View Details</a>
-    </div>
-{% endfor %}
+<style>
+    .criminal-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .criminal-table th, .criminal-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .criminal-table th {
+        background-color: #f2f2f2;
+    }
+
+    .go-back-link {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+        padding: 5px;
+        background-color: #007BFF;
+        color: #fff;
+        border-radius: 4px;
+        text-align: center;
+        width: 100px;
+    }
+
+    .go-back-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<table class="criminal-table">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for criminal in criminals %}
+            <tr>
+                <td><img src="{{ criminal.photo.url }}" alt="{{ criminal.name }}" style="max-width: 100px;"></td>
+                <td><h3>{{ criminal.name }}</h3></td>
+                <td><p>{{ criminal.description }}</p></td>
+                <td><a href="{% url 'criminal_details' criminal.id %}" class="go-back-link">View Details</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

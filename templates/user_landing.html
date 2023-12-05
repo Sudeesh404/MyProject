@@ -3,88 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Landing Page</title>
+    <title>User Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            text-align: center;
-            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
-            position: relative; 
+            display: flex;
+        }
+
+        aside {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            width: 250px;
+            min-height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
 
         header {
-            background-color: #333;
-            padding: 15px 0;
-            color: yellow;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center; 
-            background:url('/static/assets/logo_kerala.png')
-            position: relative; 
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
         }
 
-        h1 {
-            margin: 0;
-
-        }
-        #logo {
-            position: absolute; 
-            top: 200px;
-            left: 400px;
-            max-width: 1000px; 
+        main {
+            flex: 1;
+            padding: 20px;
         }
 
         nav {
-            margin-to1: 15px;
-        }
-
-        .button-container {
+            margin-top: 15px;
             display: flex;
-            justify-content: right;
-            align-items: center;
+            flex-direction: column;
         }
 
         .button {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 10px;
+            margin: 10px 0;
             text-decoration: none;
             color: #fff;
-            background-color: #007BFF;
+            background-color: #0056b3;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            text-align: center;
         }
 
         .button:hover {
-            background-color: #0056b2;
+            background-color: #004080;
+        }
+        .logo {
+            position: absolute; 
+            top: 200px;
+            left: 400px;
+            transform: translateX(-10%);
+            max-width: 100%; 
+            height: auto;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo">
-        <h1>Welcome, {{ user.username }}!</h1>
-        <div>
-            <nav class="button-container">
-        </div>
+    <aside>
+        <h2>User Dashboard</h2>
+        <nav>
             <a href="{% url 'index' %}" class="button">Home</a>
-            {% comment %} <a href="{% url 'update_profile' %}" class="button">Update Profile</a> {% endcomment %}
             <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
             <a href="{% url 'submit_feedback' %}" class="button">Feedback</a>
             <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
-            <a href="{% url 'most_wanted_list' %}" class="button">Most wanted</a>
+            <a href="{% url 'most_wanted_list' %}" class="button">Most Wanted</a>
             <a href="{% url 'logout_view' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
                 {% csrf_token %}
             </form>
         </nav>
-    </header>
-    <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo">
-    <p></p>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Welcome, {{ user.username }}!</h1>
+        </header>
+        <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo" class="logo">
+        
+    </main>
+
 </body>
 </html>
