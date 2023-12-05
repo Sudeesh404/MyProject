@@ -1,68 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Person List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
 
-{% extends 'base.html' %}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
-{% block content %}
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
 
-    th {
-      background-color: #007BFF;
-      color: white;
-    }
+        form {
+            margin: 20px;
+        }
 
-    form {
-      margin-top: 20px;
-    }
+        .button {
+            display: inline-block;
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-    button {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+        .button:hover {
+            background-color: #004080;
+        }
+    </style>
+</head>
+<body>
 
-    button:hover {
-      background-color: #0056b2;
-    }
-  </style>
+    <h2>Missing Person List</h2>
 
-  <h2>Missing Persons List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for missing_person in missing_personsa %}
+                <tr>
+                    <td>{{ missing_person.name }}</td>
+                    <td>{{ missing_person.description }}</td>
+                    <td>{{ missing_person.status }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="missing_person" value="{{ missing_person.id }}">
+                            <select name="status">
+                                <option value="Searching">Searching</option>
+                                <option value="Found">Found</option>
+                            </select>
+                            <button type="submit" class="button">Update Status</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <!-- Add other fields as needed -->
-      </tr>
-    </thead>
-    <tbody>
-      {% for missing_person in missing_persons %}
-        <tr>
-          <td>{{ missing_person.name }}</td>
-          <td>{{ missing_person.status }}</td>
-          <!-- Add other fields as needed -->
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+</body>
+</html>
 
-  <h3>Update Status</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update Status</button>
-  </form>
-{% endblock %}
+

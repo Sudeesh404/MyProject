@@ -248,16 +248,22 @@ def report_missing_person(request):
 
     return render(request, 'report_missing_person.html', {'form': form})
 from .forms import UpdateStatusForm
-
-def missing_person_list(request):
+def missing_person_lista(request):
     missing_persons = MissingPerson.objects.all()
     form = UpdateStatusForm()
 
     if request.method == 'POST':
         form = UpdateStatusForm(request.POST)
         if form.is_valid():
-            # Update the status here
-            status = form.cleaned_data['status']
-            # Handle the status update logic
+            # Retrieve the MissingPerson instance
+            missing_person_id = form.cleaned_data['missing_person']
+            missing_person = MissingPerson.objects.get(id=missing_person_id)
 
-    return render(request, 'missing_person_list.html', {'missing_persons': missing_persons, 'form': form})
+            # Update the status
+            missing_person.status = form.cleaned_data['status']
+            missing_person.save()
+
+            # Redirect to the same page after updating the status
+            return redirect('missing_person_lista')
+
+    return render(request, 'admin/missing_person_lista.html', {'missing_personsa': missing_persons, 'form': form})

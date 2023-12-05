@@ -9,7 +9,7 @@ from .views import file_complaint
 from .views import admindashboard
 from .views import user_account
 from .views import generate_pdf
-from .views import missing_person_list, report_missing_person
+from .views import missing_person_list, report_missing_person, missing_person_lista
 from .views import most_wanted_list, add_criminal, criminal_details
 
 
@@ -40,6 +40,7 @@ urlpatterns = [
     path('add_criminal/', add_criminal, name='add_criminal'),
     path('criminal_details/<int:criminal_id>/', criminal_details, name='criminal_details'),
     path('missing_persons/', missing_person_list, name='missing_person_list'),
+    path('missing_personsa/', missing_person_lista, name='missing_person_lista'),
     path('report_missing_person/', report_missing_person, name='report_missing_person'),
 
 ]
