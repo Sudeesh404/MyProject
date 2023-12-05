@@ -207,3 +207,25 @@ def logout_view(request):
 # def logout_view(request):
 #     logout(request)
 #     return redirect('login')
+
+from .models import Criminal
+from .forms import CriminalForm
+
+def most_wanted_list(request):
+    criminals = Criminal.objects.all()
+    return render(request, 'most_wanted_list.html', {'criminals': criminals})
+
+def add_criminal(request):
+    if request.method == 'POST':
+        form = CriminalForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('most_wanted_list')
+    else:
+        form = CriminalForm()
+
+    return render(request, 'add_criminal.html', {'form': form})
+
+def criminal_details(request, criminal_id):
+    criminal = Criminal.objects.get(pk=criminal_id)
+    return render(request, 'criminal_details.html', {'criminal': criminal})
