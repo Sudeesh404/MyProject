@@ -247,10 +247,11 @@ def report_missing_person(request):
         form = MissingPersonForm()
 
     return render(request, 'report_missing_person.html', {'form': form})
+
+
 from .forms import UpdateStatusForm
 def missing_person_lista(request):
     missing_persons = MissingPerson.objects.all()
-    form = UpdateStatusForm()
 
     if request.method == 'POST':
         form = UpdateStatusForm(request.POST)
@@ -266,4 +267,6 @@ def missing_person_lista(request):
             # Redirect to the same page after updating the status
             return redirect('missing_person_lista')
 
+    # If it's a GET request or the form is not valid, render the template with the form
+    form = UpdateStatusForm()
     return render(request, 'admin/missing_person_lista.html', {'missing_personsa': missing_persons, 'form': form})

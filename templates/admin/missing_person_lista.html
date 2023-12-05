@@ -13,6 +13,10 @@
             text-align: center;
         }
 
+        h2 {
+            color: #333;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -33,9 +37,13 @@
             margin: 20px;
         }
 
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
         .button {
             display: inline-block;
-            padding: 10px;
             text-decoration: none;
             color: #fff;
             background-color: #0056b3;
@@ -69,12 +77,13 @@
                     <td>{{ missing_person.description }}</td>
                     <td>{{ missing_person.status }}</td>
                     <td>
-                        <form method="post">
+                        <!-- Update the form tag to include a unique identifier -->
+                        <form method="post" id="updateForm_{{ missing_person.id }}">
                             {% csrf_token %}
                             <input type="hidden" name="missing_person" value="{{ missing_person.id }}">
                             <select name="status">
-                                <option value="Searching">Searching</option>
-                                <option value="Found">Found</option>
+                                <option value="Searching" {% if missing_person.status == 'Searching' %}selected{% endif %}>Searching</option>
+                                <option value="Found" {% if missing_person.status == 'Found' %}selected{% endif %}>Found</option>
                             </select>
                             <button type="submit" class="button">Update Status</button>
                         </form>
@@ -86,5 +95,6 @@
 
 </body>
 </html>
+
 
 
