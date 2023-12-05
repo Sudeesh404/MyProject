@@ -224,7 +224,7 @@ def add_criminal(request):
     else:
         form = CriminalForm()
 
-    return render(request, 'add_criminal.html', {'form': form})
+    return render(request, 'admin/add_criminal.html', {'form': form})
 
 def criminal_details(request, criminal_id):
     criminal = Criminal.objects.get(pk=criminal_id)
