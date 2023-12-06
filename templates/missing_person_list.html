@@ -1,5 +1,73 @@
-{% for missing_person in missing_persons %}
-  <h2>{{ missing_person.name }}</h2>
-  <p>Status: {{ missing_person.status }}</p>
-  <!-- Add other details as needed -->
-{% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Person List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Add other styles as needed */
+
+    </style>
+</head>
+<body>
+
+    <h2>Missing Person List</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Photo</th>
+                <th>description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for missing_person in missing_persons %}
+                <tr>
+                    <td>{{ missing_person.name }}</td>
+                    <td>{{ missing_person.photo}}</td>
+                    <td>{{ missing_person.description }}</td>
+                    <td>{{ missing_person.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

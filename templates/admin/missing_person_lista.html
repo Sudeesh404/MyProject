@@ -11,6 +11,7 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            background: url('/static/assets/img/1.jpg') center/cover no-repeat fixed;
         }
 
         h2 {
@@ -87,12 +88,12 @@
                             </select>
                             <button type="submit" class="button">Update Status</button>
                         </form>
+                        <a href="{% url 'missing_person_details' missing_person.id %}" class="button">More</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
 </body>
 </html>
 

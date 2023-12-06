@@ -239,7 +239,7 @@ def missing_person_list(request):
 
 def report_missing_person(request):
     if request.method == 'POST':
-        form = MissingPersonForm(request.POST)
+        form = MissingPersonForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('user_landing')
@@ -247,6 +247,11 @@ def report_missing_person(request):
         form = MissingPersonForm()
 
     return render(request, 'report_missing_person.html', {'form': form})
+
+
+def missing_person_details(request, missing_person_id):
+    missing_person = get_object_or_404(MissingPerson, id=missing_person_id)
+    return render(request, 'admin/missing_person_details.html', {'missing_person': missing_person})
 
 
 from .forms import UpdateStatusForm

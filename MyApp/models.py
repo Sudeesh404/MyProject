@@ -72,7 +72,7 @@ class MissingPerson(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
     description = models.TextField()
-    photo = models.ImageField(upload_to='missing_persons/', null=True, blank=True)
+    photo = models.ImageField(upload_to='missing_persons/')
     status = models.CharField(max_length=20, choices=[('reported', 'Reported'),('searching', 'Searching'), ('found', 'Found')], default='reported')
 
     def __str__(self):

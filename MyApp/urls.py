@@ -9,7 +9,8 @@ from .views import file_complaint
 from .views import admindashboard
 from .views import user_account
 from .views import generate_pdf
-from .views import missing_person_list, report_missing_person, missing_person_lista
+from .views import missing_person_list, report_missing_person, missing_person_lista, missing_person_details
+
 from .views import most_wanted_list, add_criminal, criminal_details
 
 
@@ -19,7 +20,7 @@ urlpatterns = [
     path('',views.index,name="index"),
     path('register/',views.register, name='register'),
     path('user_landing/', user_landing, name='user_landing'),
-    path("dashboard/",admindashboard,name="dashboard"),
+    path('dashboard/',admindashboard,name="dashboard"),
     path('user_account/',user_account,name='user_account'),
     path("file_complaint", file_complaint, name='file_complaint'), 
     path('logout_view/', logout_view, name='logout_view'),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('criminal_details/<int:criminal_id>/', criminal_details, name='criminal_details'),
     path('missing_persons/', missing_person_list, name='missing_person_list'),
     path('missing_personsa/', missing_person_lista, name='missing_person_lista'),
+    path('missing_person_details/<int:missing_person_id>/', missing_person_details, name='missing_person_details'),
     path('report_missing_person/', report_missing_person, name='report_missing_person'),
 
 ]
