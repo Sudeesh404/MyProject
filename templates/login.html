@@ -22,9 +22,9 @@
         {% endif %}
         <form method="post">
             {% csrf_token %}
-            <input type="text" placeholder="username" name="username" required>
-            <input type="password" placeholder="password" name="password" required>
-            <input type="submit" value="Login"><br>
+            <input type="text" placeholder="username" name="username" id="username" required>
+            <input type="password" placeholder="password" id="password" name="password" required>
+            <input type="submit" id="testid" value="Login"><br>
             <span><center>Forget Password? <a href="{% url 'password_reset' %}">Reset</a><center></span>
             <p><h5><center>Not a User?<a href="{% url 'register' %}">Register Here</a><center><h5></p>
         </form>

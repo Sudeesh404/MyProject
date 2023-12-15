@@ -1,40 +1,36 @@
-from django.test import LiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+from django.test import TestCase
+from django.urls import reverse
+from django.contrib.auth.models import User
 
-class LoginSeleniumTest(LiveServerTestCase):
+class LoginTest(TestCase):
+    def setUp(self):
+        # Create a test user
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpassword'
+        )
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.selenium = webdriver.Chrome()
+    def test_login_view(self):
+        # Test the login view
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Login')
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
+    def test_login_success(self):
+        # Test successful login
+        login_data = {'username': 'testuser', 'password': 'testpassword'}
+        response = self.client.post(reverse('login'), data=login_data, follow=True)
+        self.assertTrue(response.context['user'].is_authenticated)
+        self.assertRedirects(response, reverse('user_landing'))
 
-    def test_login_with_valid_credentials(self):
-        self.live_server_url='http://127.0.0.1:8000/'
-        self.selenium.get(self.live_server_url + 'login/')  # Update with your login URL
+    def test_login_failure(self):
+        # Test unsuccessful login
+        login_data = {'username': 'testuser', 'password': 'wrongpassword'}
+        response = self.client.post(reverse('login'), data=login_data)
+        self.assertFalse(response.context['user'].is_authenticated)
+        self.assertContains(response, 'Invalid username or password')
 
-        # Replace 'your_username' and 'your_password' with valid credentials
-        username_input = self.selenium.find_element(By.NAME, 'username')
-        password_input = self.selenium.find_element(By.NAME, 'password')
-        username_input.send_keys('vishnu')
-        password_input.send_keys('vV@12345')
-        self.selenium.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
-
-
-        # Wait for the page to load after clicking submit
-        self.selenium.implicitly_wait(5)  # Adjust the time based on your application behavior
-
-        # Example assertions based on your application behavior
-        # Uncomment and modify according to your actual HTML structure and expected results
-        # self.assertIn('Welcome', self.selenium.page_source)
-        # self.assertIn('Dashboard', self.selenium.title)
-        # self.assertTrue(self.selenium.find_element_by_css_selector('.user-welcome').is_displayed())
-
-        # Optionally, add a sleep to keep the browser open for a moment (for manual inspection)
-        # time.sleep(5)
+    def test_logout_view(self):
+        # Test logout view
+        response = self.client.get(reverse('logout_view'))
+        self.assertRedirects(response, reverse('login'))
