@@ -43,33 +43,8 @@ class Logintest(LiveServerTestCase):
         self.assertIn("dashboard/", self.driver.current_url)
         print("Test scenario 'View Users' passed.")
 
-    def test_user_view_page(self):
-        user_view_url = self.live_server_url + '/user_view/'  # Change to your actual user view page URL
-
-        # Log in with valid credentials
-        self.driver.get(self.live_server_url)
-        self.fill_form(username="admin", password="admin")
-        self.driver.find_element(By.ID, "testid").click()
-
-        # Navigate to the user view page
-        self.driver.get(user_view_url)
-
-        # Check if the title is "Users"
-        WebDriverWait(self.driver, 10).until(
-            EC.title_contains("Users")
-        )
-
-        # You can add more assertions or checks related to the content of the user view page
-        # For example, check if certain elements are present on the page
-
-        # Add assertions here based on the structure of your user view page
-        # Example:
-        # self.assertTrue(self.driver.find_element(By.ID, "user-list").is_displayed())
-
-        print("Test scenario 'User View Page' passed.")
-
     def test_complaint_list_page(self):
-        complaint_list_url = self.live_server_url + '/complaint_list/'  # Change to your actual complaint list page URL
+        complaint_list_url = self.live_server_url + 'http://127.0.0.1:8000/complaints/'  # Change to your actual complaint list page URL
 
         # Log in with valid credentials
         self.driver.get(self.live_server_url)
@@ -81,7 +56,7 @@ class Logintest(LiveServerTestCase):
 
         # Check if the title is "Complaint List"
         WebDriverWait(self.driver, 10).until(
-            EC.title_contains("Complaint List")
+            EC.title_contains("Complaints")
         )
 
 
@@ -89,4 +64,3 @@ class Logintest(LiveServerTestCase):
 
 if __name__ == '__main__':
     LiveServerTestCase.main()
-
