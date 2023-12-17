@@ -41,45 +41,52 @@ class Logintest(LiveServerTestCase):
             # No alert, continue with the test
             pass
         self.assertIn("user_landing/", self.driver.current_url)
-        print("Test scenario 'Users Login passed.")
+        print("Test scenario 'Users Login' passed.")
+        print("Test scenario 'File Complaint' passed.")
 
-    def test_feedback_submission(self):
-    feedback_url = self.live_server_url + '/feedback/'  # Change to your actual feedback submission page URL
+    def test_file_complaint(self):
+        complaint_url = f"{self.live_server_url}/file_complaint/"  
+        self.driver.get(complaint_url)
 
-    # Navigate to the feedback submission page
-    self.driver.get(feedback_url)
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.ID, "name"))
+            )
+        except TimeoutException as e:
+            print(f"TimeoutException: {e}")
+            print(f"Current URL: {self.driver.current_url}")
+            print(f"Current Title: {self.driver.title}")
+            raise
+        try:
+            name_input = self.driver.find_element(By.ID, "name")
+            place_input = self.driver.find_element(By.NAME, "place")
+            description_input = self.driver.find_element(By.NAME, "Description")
 
-    try:
-        # Wait for the feedback text input field to be visible
-        WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.ID, "feedback_text"))
-        )
-    except TimeoutException as e:
-        # Output more information to help diagnose the issue
-        print(f"TimeoutException: {e}")
-        print(f"Current URL: {self.driver.current_url}")
-        print(f"Current Title: {self.driver.title}")
-        raise
+            # Fill out the form with sample data
+            name_input.send_keys("John Doe")
+            place_input.send_keys("Sample Place")
+            description_input.send_keys("This is a test complaint.")
 
-    # Try to find and interact with the feedback text input field
-    try:
-        feedback_text_input = self.driver.find_element(By.ID, "feedback_text")
-        feedback_text_input.send_keys("This is a test feedback.")
-    except NoSuchElementException as e:
-        # Output more information to help diagnose the issue
-        print(f"NoSuchElementException: {e}")
-        print(f"Current URL: {self.driver.current_url}")
-        print(f"Current Title: {self.driver.title}")
-        raise
+            # Submit the form
+            submit_button = self.driver.find_element(By.ID, "submitButton")
+            submit_button.click()
 
-    # Add more assertions or checks based on the behavior of your feedback submission
-    # For example, check for a success message or verify if the feedback is displayed on the page
+            # Wait for the success message or redirect
+            WebDriverWait(self.driver, 10).until(
+                EC.url_matches("/success_page/")  # Adjust the URL or success condition accordingly
+            )
 
-    # Add assertions here based on the structure of your feedback submission page
-    # Example:
-    # self.assertTrue(self.driver.find_element(By.ID, "success_message").is_displayed())
+            # Assert success (You can customize this based on your application behavior)
+            self.assertIn("success", self.driver.current_url)
+            self.assertEqual("Complaint submitted successfully!", self.driver.find_element(By.ID, "successMessage").text)
 
-    print("Test scenario 'Feedback Submission' passed.")
+        except NoSuchElementException as e:
+            print(f"NoSuchElementException: {e}")
+            print(f"Current URL: {self.driver.current_url}")
+            print(f"Current Title: {self.driver.title}")
+            raise
+
+        print("Test scenario 'File Complaint' passed.")
 
 if __name__ == '__main__':
     LiveServerTestCase.main()
