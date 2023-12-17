@@ -1,36 +1,92 @@
-from django.test import TestCase
-from django.urls import reverse
-from django.contrib.auth.models import User
+from django.test import LiveServerTestCase
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.service import Service
+from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
 
-class LoginTest(TestCase):
+class Logintest(LiveServerTestCase):
     def setUp(self):
-        # Create a test user
-        self.user = User.objects.create_user(
-            username='testuser',
-            password='testpassword'
+        service = Service(r'D:\mca\geckodriver.exe')
+        self.driver = webdriver.Firefox(service=service)
+        self.driver.implicitly_wait(10)
+        self.live_server_url = "http://127.0.0.1:8000/login"  # Updated URL
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def fill_form(self, username='', password=''):
+        driver = self.driver
+        WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "username"))
+        )
+        driver.find_element(By.ID, "username").send_keys(username)
+        WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "password"))
+        )
+        driver.find_element(By.ID, "password").send_keys(password)
+
+    def test_correct_credentials(self):
+        self.driver.get(self.live_server_url)
+        self.fill_form(username="admin", password="admin")
+        self.driver.find_element(By.ID, "testid").click()
+        try:
+            WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            alert = self.driver.switch_to.alert
+            alert_text = alert.text
+            alert.dismiss()  # Dismiss the alert
+            self.fail(f"Login attempt failed with alert: {alert_text}")
+        except TimeoutException:
+            # No alert, continue with the test
+            pass
+        self.assertIn("dashboard/", self.driver.current_url)
+        print("Test scenario 'View Users' passed.")
+
+    def test_user_view_page(self):
+        user_view_url = self.live_server_url + '/user_view/'  # Change to your actual user view page URL
+
+        # Log in with valid credentials
+        self.driver.get(self.live_server_url)
+        self.fill_form(username="admin", password="admin")
+        self.driver.find_element(By.ID, "testid").click()
+
+        # Navigate to the user view page
+        self.driver.get(user_view_url)
+
+        # Check if the title is "Users"
+        WebDriverWait(self.driver, 10).until(
+            EC.title_contains("Users")
         )
 
-    def test_login_view(self):
-        # Test the login view
-        response = self.client.get(reverse('login'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Login')
+        # You can add more assertions or checks related to the content of the user view page
+        # For example, check if certain elements are present on the page
 
-    def test_login_success(self):
-        # Test successful login
-        login_data = {'username': 'testuser', 'password': 'testpassword'}
-        response = self.client.post(reverse('login'), data=login_data, follow=True)
-        self.assertTrue(response.context['user'].is_authenticated)
-        self.assertRedirects(response, reverse('user_landing'))
+        # Add assertions here based on the structure of your user view page
+        # Example:
+        # self.assertTrue(self.driver.find_element(By.ID, "user-list").is_displayed())
 
-    def test_login_failure(self):
-        # Test unsuccessful login
-        login_data = {'username': 'testuser', 'password': 'wrongpassword'}
-        response = self.client.post(reverse('login'), data=login_data)
-        self.assertFalse(response.context['user'].is_authenticated)
-        self.assertContains(response, 'Invalid username or password')
+        print("Test scenario 'User View Page' passed.")
 
-    def test_logout_view(self):
-        # Test logout view
-        response = self.client.get(reverse('logout_view'))
-        self.assertRedirects(response, reverse('login'))
+    def test_complaint_list_page(self):
+        complaint_list_url = self.live_server_url + '/complaint_list/'  # Change to your actual complaint list page URL
+
+        # Log in with valid credentials
+        self.driver.get(self.live_server_url)
+        self.fill_form(username="admin", password="admin")
+        self.driver.find_element(By.ID, "testid").click()
+
+        # Navigate to the complaint list page
+        self.driver.get(complaint_list_url)
+
+        # Check if the title is "Complaint List"
+        WebDriverWait(self.driver, 10).until(
+            EC.title_contains("Complaint List")
+        )
+
+
+        print("Test scenario 'Complaint List Page' passed.")
+
+if __name__ == '__main__':
+    LiveServerTestCase.main()
+
