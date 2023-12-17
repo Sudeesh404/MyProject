@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Submit Feedback</title>
+    <title>Feedback</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -55,7 +55,7 @@
         {% csrf_token %}
         <textarea name="feedback_message" rows="5" cols="50" placeholder="Enter your feedback here" required></textarea>
         <br>
-        <button type="submit">Submit Feedback</button>
+        <button type="submit" id="submit_feedback">Submit Feedback</button>
     </form>
 </body>
 </html>

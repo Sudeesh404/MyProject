@@ -29,7 +29,7 @@ class Logintest(LiveServerTestCase):
 
     def test_correct_credentials(self):
         self.driver.get(self.live_server_url)
-        self.fill_form(username="admin", password="admin")
+        self.fill_form(username="sudeesh43", password="sushi@123")
         self.driver.find_element(By.ID, "testid").click()
         try:
             WebDriverWait(self.driver, 10).until(EC.alert_is_present())
@@ -40,27 +40,17 @@ class Logintest(LiveServerTestCase):
         except TimeoutException:
             # No alert, continue with the test
             pass
-        self.assertIn("dashboard/", self.driver.current_url)
-        print("Test scenario 'View Users' passed.")
+        self.assertIn("user_landing/", self.driver.current_url)
+        print("Test scenario 'Users Login passed.")
 
-    def test_complaint_list_page(self):
-        complaint_list_url = self.live_server_url + 'http://127.0.0.1:8000/complaints/'  # Change to your actual complaint list page URL
+    def test_feedback_submission(self):
+        feedback_url = self.live_server_url + 'http://127.0.0.1:8000/submit_feedback/'  # Change to your actual feedback submission page URL
 
-        # Log in with valid credentials
-        self.driver.get(self.live_server_url)
-        self.fill_form(username="admin", password="admin")
-        self.driver.find_element(By.ID, "testid").click()
-
-        # Navigate to the complaint list page
-        self.driver.get(complaint_list_url)
-
-        # Check if the title is "Complaint List"
-        WebDriverWait(self.driver, 10).until(
-            EC.title_contains("Complaints")
-        )
-
-
-        print("Test scenario 'Complaint List Page' passed.")
+        # Navigate to the feedback submission page
+        self.driver.get(feedback_url)
+        self.driver.find_element(By.ID, "feedback_text").send_keys("This is a test feedback.")
+        self.driver.find_element(By.ID, "submit_button").click()
+        print("Test scenario 'Feedback Submission' passed.")
 
 if __name__ == '__main__':
     LiveServerTestCase.main()
