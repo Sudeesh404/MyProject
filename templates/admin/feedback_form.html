@@ -53,7 +53,7 @@
     <h3>Submit Feedback</h3></center>
     <form method="post">
         {% csrf_token %}
-        <textarea name="feedback_message" rows="5" cols="50" placeholder="Enter your feedback here" required></textarea>
+        <textarea id="feedback_text" name="feedback_message" rows="5" cols="50" placeholder="Enter your feedback here" required></textarea>
         <br>
         <button type="submit" id="submit_feedback">Submit Feedback</button>
     </form>
