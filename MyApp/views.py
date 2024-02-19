@@ -22,6 +22,8 @@ from io import BytesIO
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
+#mainproject
+from .forms import PoliceStationRegistrationForm
 
 def register(request):
     if request.method == 'POST':
@@ -275,3 +277,14 @@ def missing_person_lista(request):
     # If it's a GET request or the form is not valid, render the template with the form
     form = UpdateStatusForm()
     return render(request, 'admin/missing_person_lista.html', {'missing_personsa': missing_persons, 'form': form})
+
+#mainproject
+def register_police_station(request):
+    if request.method == 'POST':
+        form = PoliceStationRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirect to home page after registration
+    else:
+        form = PoliceStationRegistrationForm()
+    return render(request, 'registration/police_station_registration.html', {'form': form})

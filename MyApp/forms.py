@@ -70,7 +70,7 @@ class PoliceStationRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'law_agency_id', 'first_name', 'last_name', 'email', 'branch', 'password1', 'password2']
+        fields = ['username', 'station_id', 'first_name', 'last_name', 'email', 'branch', 'password1', 'password2']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -79,7 +79,7 @@ class PoliceStationRegistrationForm(UserCreationForm):
             user.save()
             police_station = PoliceStation.objects.create(
                 user=user,
-                law_agency_id=self.cleaned_data['law_agency_id'],
+                station_id=self.cleaned_data['station_id'],
                 first_name=self.cleaned_data['first_name'],
                 last_name=self.cleaned_data['last_name'],
                 email=self.cleaned_data['email'],

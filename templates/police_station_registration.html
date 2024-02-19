@@ -1,0 +1,71 @@
+<!-- police_station_registration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Station Registration</title>
+    <script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var stationId = document.getElementById("station_id").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            if (username == "") {
+                alert("Username must be filled out");
+                return false;
+            }
+
+            if (stationId == "") {
+                alert("Station ID must be filled out");
+                return false;
+            }
+
+            if (email == "") {
+                alert("Email must be filled out");
+                return false;
+            }
+
+            if (password == "") {
+                alert("Password must be filled out");
+                return false;
+            }
+
+            if (confirmPassword == "") {
+                alert("Confirm Password must be filled out");
+                return false;
+            }
+
+            if (password != confirmPassword) {
+                alert("Passwords do not match");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Police Station Registration</h2>
+    <form method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="station_id">Station ID:</label>
+        <input type="text" id="station_id" name="station_id" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required><br>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
