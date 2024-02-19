@@ -59,3 +59,30 @@ class UpdateStatusForm(forms.ModelForm):
     class Meta:
         model = MissingPerson
         fields = ['status']
+
+from .models import PoliceStation
+class PoliceStationRegistrationForm(UserCreationForm):
+    station_id = forms.CharField(max_length=100)
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    branch = forms.CharField(max_length=100)
+
+    class Meta:
+        model = User
+        fields = ['username', 'law_agency_id', 'first_name', 'last_name', 'email', 'branch', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            police_station = PoliceStation.objects.create(
+                user=user,
+                law_agency_id=self.cleaned_data['law_agency_id'],
+                first_name=self.cleaned_data['first_name'],
+                last_name=self.cleaned_data['last_name'],
+                email=self.cleaned_data['email'],
+                branch=self.cleaned_data['branch']
+            )
+        return user
