@@ -5,67 +5,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Police Station Registration</title>
-    <script>
-        function validateForm() {
-            var username = document.getElementById("username").value;
-            var stationId = document.getElementById("station_id").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirm_password").value;
-
-            if (username == "") {
-                alert("Username must be filled out");
-                return false;
-            }
-
-            if (stationId == "") {
-                alert("Station ID must be filled out");
-                return false;
-            }
-
-            if (email == "") {
-                alert("Email must be filled out");
-                return false;
-            }
-
-            if (password == "") {
-                alert("Password must be filled out");
-                return false;
-            }
-
-            if (confirmPassword == "") {
-                alert("Confirm Password must be filled out");
-                return false;
-            }
-
-            if (password != confirmPassword) {
-                alert("Passwords do not match");
-                return false;
-            }
+    <style>
+        .error {
+            color: red;
         }
-    </script>
+    </style>
 </head>
 <body>
-
     <h2>Police Station Registration</h2>
     <form method="post" onsubmit="return validateForm()">
         {% csrf_token %}
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="station_id">Station ID:</label>
-        <input type="text" id="station_id" name="station_id" required><br>
+        <input type="text" id="username" name="username" required oninput="validateUsername()">
+        <span id="username-error" class="error"></span><br>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" required oninput="validateEmail()">
+        <span id="email-error" class="error"></span><br>
+
+        <label for="station-id">Station ID:</label>
+        <input type="text" id="station-id" name="station_id" required oninput="validateStationId()">
+        <span id="station-id-error" class="error"></span><br>
+
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="first_name" required><br>
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last_name" required><br>
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required><br>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
 
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required><br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm_password" required oninput="validatePasswordMatch()">
+        <span id="password-error" class="error"></span><br>
 
         <button type="submit">Register</button>
     </form>
+
+    <script>
+        function validateUsername() {
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value;
+            const usernameError = document.getElementById('username-error');
+
+            // Validate username length and format
+            if (username.length < 8) {
+                usernameError.innerText = 'Username must be at least 8 characters long';
+                return false;
+            } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                usernameError.innerText = 'Username must contain only letters and numbers';
+                return false;
+            } else {
+                usernameError.innerText = '';
+                return true;
+            }
+        }
+
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value;
+            const emailError = document.getElementById('email-error');
+
+            // Validate email format
+            if (!email) {
+                emailError.innerText = 'Email is required';
+                return false;
+            } else {
+                emailError.innerText = '';
+                return true;
+            }
+        }
+
+        function validateStationId() {
+            const stationIdInput = document.getElementById('station-id');
+            const stationId = stationIdInput.value;
+            const stationIdError = document.getElementById('station-id-error');
+
+            // Validate station ID format
+            if (!stationId) {
+                stationIdError.innerText = 'Station ID is required';
+                return false;
+            } else {
+                stationIdError.innerText = '';
+                return true;
+            }
+        }
+
+        function validatePasswordMatch() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            const passwordError = document.getElementById('password-error');
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                passwordError.innerText = 'Passwords do not match';
+                return false;
+            } else {
+                passwordError.innerText = '';
+                return true;
+            }
+        }
+
+        function validateForm() {
+            // Perform all validations
+            return validateUsername() && validateEmail() && validateStationId() && validatePasswordMatch();
+        }
+    </script>
 </body>
 </html>
