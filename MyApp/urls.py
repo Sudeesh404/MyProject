@@ -44,6 +44,6 @@ urlpatterns = [
     path('missing_personsa/', missing_person_lista, name='missing_person_lista'),
     path('missing_person_details/<int:missing_person_id>/', missing_person_details, name='missing_person_details'),
     path('report_missing_person/', report_missing_person, name='report_missing_person'),
-    path('register/police-station/', views.police_station_registration, name='police_station_registration')
+    path('police_station_registration/', views.police_station_registration, name='police_station_registration')
 
 ]

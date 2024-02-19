@@ -279,12 +279,14 @@ def missing_person_lista(request):
     return render(request, 'admin/missing_person_lista.html', {'missing_personsa': missing_persons, 'form': form})
 
 #mainproject
-def register_police_station(request):
+def police_station_registration(request):
     if request.method == 'POST':
         form = PoliceStationRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  # Redirect to home page after registration
+            # Redirect to a success page or dashboard
+            return redirect('success_page')
     else:
         form = PoliceStationRegistrationForm()
-    return render(request, 'registration/police_station_registration.html', {'form': form})
+
+    return render(request, 'police_station_registration.html', {'form': form})
