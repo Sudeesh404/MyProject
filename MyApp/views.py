@@ -282,17 +282,22 @@ def missing_person_lista(request):
 import logging
 logger = logging.getLogger(__name__)
 
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+
+from django.shortcuts import render, redirect
+from .forms import PoliceStationRegistrationForm
+
 def police_station_registration(request):
     if request.method == 'POST':
         form = PoliceStationRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            logger.info('Form data saved successfully')
-            return redirect('success_page')
-        else:
-            logger.error('Form data is invalid: %s', form.errors)
+            return redirect('police_home')  # Redirect to a success page
     else:
         form = PoliceStationRegistrationForm()
-
     return render(request, 'police_station_registration.html', {'form': form})
+
+
 

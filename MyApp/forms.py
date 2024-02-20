@@ -68,16 +68,19 @@ class PoliceStationRegistrationForm(UserCreationForm):
     email = forms.EmailField()
     branch = forms.CharField(max_length=100)
     password1 = forms.CharField(required=True, label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(required=True, label='Confirm Password', widget=forms.PasswordInput)
+    
 
     class Meta:
         model = User
-        fields = ['username', 'station_id', 'first_name', 'last_name', 'email', 'branch', 'password1', 'password2']
+        fields = ['username', 'station_id', 'first_name', 'last_name', 'email', 'branch', 'password1']
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
+        password = self.cleaned_data['password1']  # Get the password from the form
+        user.role = User.Role.OFFICER
         if commit:
+            user.set_password(password)  # Set the password for the user
             user.save()
             police_station = PoliceStation.objects.create(
                 user=user,
@@ -86,7 +89,5 @@ class PoliceStationRegistrationForm(UserCreationForm):
                 last_name=self.cleaned_data['last_name'],
                 email=self.cleaned_data['email'],
                 branch=self.cleaned_data['branch'],
-                password1=self.cleaned_data['password1'],
-                password2=self.cleaned_data['password2']
             )
         return user
