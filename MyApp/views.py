@@ -294,10 +294,12 @@ def police_station_registration(request):
         form = PoliceStationRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('police_home')  # Redirect to a success page
+            return redirect('login')  # Redirect to a success page
     else:
         form = PoliceStationRegistrationForm()
     return render(request, 'police_station_registration.html', {'form': form})
 
-
+def police_home(request):
+    # Add logic here if needed
+    return render(request, 'police_home.html')
 
