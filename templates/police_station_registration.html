@@ -1,4 +1,3 @@
-<!-- police_station_registration.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,19 +65,16 @@
 </head>
 <body>
     <h2>Police Station Registration</h2>
-    <form method="post" onsubmit="return validateForm()"  action="{% url 'police_station_registration' %}">
+    <form method="post" action="{% url 'police_station_registration' %}">
         {% csrf_token %}
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required oninput="validateUsername()">
-        <span id="username-error" class="error"></span><br>
+        <input type="text" id="username" name="username" required><br>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required oninput="validateEmail()">
-        <span id="email-error" class="error"></span><br>
+        <input type="email" id="email" name="email" required><br>
 
         <label for="station-id">Station ID:</label>
-        <input type="text" id="station-id" name="station_id" required oninput="validateStationId()">
-        <span id="station-id-error" class="error"></span><br>
+        <input type="text" id="station-id" name="station_id" required><br>
 
         <label for="first-name">First Name:</label>
         <input type="text" id="first-name" name="first_name" required><br>
@@ -93,82 +89,9 @@
         <input type="password" id="password" name="password" required><br>
 
         <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="confirm_password" required oninput="validatePasswordMatch()">
-        <span id="password-error" class="error"></span><br>
+        <input type="password" id="confirm-password" name="confirm_password" required><br>
 
         <button type="submit">Register</button>
     </form>
-
-    <script>
-        function validateUsername() {
-            const usernameInput = document.getElementById('username');
-            const username = usernameInput.value;
-            const usernameError = document.getElementById('username-error');
-
-            // Validate username length and format
-            if (!/^[a-zA-Z0-9]+$/.test(username)) {
-                usernameError.innerText = 'Username should not start with special symbols';
-                return false;
-            } else if (username.length > 8) {
-                usernameError.innerText = 'Username must be at least 8 characters long';
-                return false;
-            } else {
-                usernameError.innerText = '';
-                return true;
-            }
-        }
-
-        function validateEmail() {
-            const emailInput = document.getElementById('email');
-            const email = emailInput.value;
-            const emailError = document.getElementById('email-error');
-
-            // Validate email format
-            if (!email) {
-                emailError.innerText = 'Email is required';
-                return false;
-            } else {
-                emailError.innerText = '';
-                return true;
-            }
-        }
-
-        function validateStationId() {
-            const stationIdInput = document.getElementById('station-id');
-            const stationId = stationIdInput.value;
-            const stationIdError = document.getElementById('station-id-error');
-
-            // Validate station ID format
-            if (!stationId) {
-                stationIdError.innerText = 'Station ID is required';
-                return false;
-            } else {
-                stationIdError.innerText = '';
-                return true;
-            }
-        }
-
-        function validatePasswordMatch() {
-            const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('confirm-password');
-            const passwordError = document.getElementById('password-error');
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-
-            // Validate password match
-            if (password !== confirmPassword) {
-                passwordError.innerText = 'Passwords do not match';
-                return false;
-            } else {
-                passwordError.innerText = '';
-                return true;
-            }
-        }
-
-        function validateForm() {
-            // Perform all validations
-            return validateUsername() && validateEmail() && validateStationId() && validatePasswordMatch();
-        }
-    </script>
 </body>
 </html>

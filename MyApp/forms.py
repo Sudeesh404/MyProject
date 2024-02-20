@@ -86,6 +86,5 @@ class PoliceStationRegistrationForm(UserCreationForm):
                 last_name=self.cleaned_data['last_name'],
                 email=self.cleaned_data['email'],
                 branch=self.cleaned_data['branch']
-                
             )
         return user
