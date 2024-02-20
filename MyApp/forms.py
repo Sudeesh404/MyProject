@@ -67,6 +67,8 @@ class PoliceStationRegistrationForm(UserCreationForm):
     last_name = forms.CharField(max_length=100)
     email = forms.EmailField()
     branch = forms.CharField(max_length=100)
+    password1 = forms.CharField(required=True, label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(required=True, label='Confirm Password', widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -84,5 +86,6 @@ class PoliceStationRegistrationForm(UserCreationForm):
                 last_name=self.cleaned_data['last_name'],
                 email=self.cleaned_data['email'],
                 branch=self.cleaned_data['branch']
+                
             )
         return user

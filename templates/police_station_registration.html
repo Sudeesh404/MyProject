@@ -6,14 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Police Station Registration</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         .error {
-            color: red;
+            color: #ff0000;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
     </style>
+        
 </head>
 <body>
     <h2>Police Station Registration</h2>
-    <form method="post" onsubmit="return validateForm()">
+    <form method="post" onsubmit="return validateForm()"  action="{% url 'police_station_registration' %}">
         {% csrf_token %}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required oninput="validateUsername()">
@@ -53,11 +106,11 @@
             const usernameError = document.getElementById('username-error');
 
             // Validate username length and format
-            if (username.length < 8) {
-                usernameError.innerText = 'Username must be at least 8 characters long';
+            if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                usernameError.innerText = 'Username should not start with special symbols';
                 return false;
-            } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
-                usernameError.innerText = 'Username must contain only letters and numbers';
+            } else if (username.length > 8) {
+                usernameError.innerText = 'Username must be at least 8 characters long';
                 return false;
             } else {
                 usernameError.innerText = '';

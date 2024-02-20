@@ -85,6 +85,7 @@ class PoliceStation(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
     branch = models.CharField(max_length=100)
+    
 
     def __str__(self):
         return f"{self.branch} - {self.station_id}"

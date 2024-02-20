@@ -279,14 +279,20 @@ def missing_person_lista(request):
     return render(request, 'admin/missing_person_lista.html', {'missing_personsa': missing_persons, 'form': form})
 
 #mainproject
+import logging
+logger = logging.getLogger(__name__)
+
 def police_station_registration(request):
     if request.method == 'POST':
         form = PoliceStationRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to a success page or dashboard
+            logger.info('Form data saved successfully')
             return redirect('success_page')
+        else:
+            logger.error('Form data is invalid: %s', form.errors)
     else:
         form = PoliceStationRegistrationForm()
 
     return render(request, 'police_station_registration.html', {'form': form})
+
