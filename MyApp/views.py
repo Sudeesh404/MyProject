@@ -49,13 +49,13 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            # Check for predefined admin credentials
-            if username == 'admin' and password == 'admin':
-                #login(request, user)
-                return redirect('dashboard')  # Redirect to the admin dashboard
+            login(request, user)
+            if user.role == user.Role.OFFICER:  # Accessing role through instance
+                return redirect('police_home')  # Redirect to the police home page
+            elif username == 'admin' and password == 'admin':
+                return redirect('dashboard')
             else:
-                login(request, user)
-                return redirect('user_landing')  # Redirect to the user landing page for regular users
+                return redirect('user_landing')
         else:
             return render(request, 'login.html', {'error_message': 'Invalid credentials'})
     

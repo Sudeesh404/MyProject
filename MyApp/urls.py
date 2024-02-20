@@ -10,7 +10,7 @@ from .views import admindashboard
 from .views import user_account
 from .views import generate_pdf
 from .views import missing_person_list, report_missing_person, missing_person_lista, missing_person_details
-
+from .views import police_home
 from .views import most_wanted_list, add_criminal, criminal_details
 
 
@@ -44,6 +44,6 @@ urlpatterns = [
     path('missing_personsa/', missing_person_lista, name='missing_person_lista'),
     path('missing_person_details/<int:missing_person_id>/', missing_person_details, name='missing_person_details'),
     path('report_missing_person/', report_missing_person, name='report_missing_person'),
-    path('police_station_registration/', views.police_station_registration, name='police_station_registration')
-
+    path('police_station_registration/', views.police_station_registration, name='police_station_registration'),
+    path('police_home/', views.police_home, name='police_home')
 ]

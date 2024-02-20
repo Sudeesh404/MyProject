@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser, Group, Permission
+
 class User(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "Admin"
@@ -12,6 +13,7 @@ class User(AbstractUser):
         choices=Role.choices,
         default=Role.USER,
     )
+
     
     # Add a related_name for groups
     groups = models.ManyToManyField(
