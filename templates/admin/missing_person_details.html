@@ -1,3 +1,5 @@
+
+{% load static %}
 <style>
     body {
         display: flex;
@@ -57,11 +59,17 @@
 </style>
 
 <div class="criminal-card">
-    <img src="{{ missing_person.photo }}" alt="{{ missing_person.name }}">
+    {% if missing_person.photo %}
+        <img src="{{ missing_person.photo.url }}" alt="{{ missing_person.name }}">
+    {% else %}
+        <p>No photo available</p>
+    {% endif %}
     <h2>{{ missing_person.name }}</h2>
     <p>Age: {{ missing_person.age }}</p>
     <p>Gender: {{ missing_person.gender }}</p>
     <p>Description: {{ missing_person.description }}</p>
-<a href="{% url 'missing_person_lista' %}" class="go-back-link">Go Back</a>
+    <a href="{% url 'missing_person_lista' %}" class="go-back-link">Go Back</a>
+</div>
+
 
 </div>

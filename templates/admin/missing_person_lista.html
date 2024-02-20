@@ -51,9 +51,29 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin-right: 5px; /* Add margin for spacing between buttons */
         }
 
         .button:hover {
+            background-color: #004080;
+        }
+
+        /* Style for the "Go Back Home" link */
+        .go-back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px 20px; /* Add padding for better appearance */
+            transition: background-color 0.3s ease;
+            margin-top: 20px; /* Add margin for spacing between the table and link */
+        }
+
+        .go-back-link:hover {
             background-color: #004080;
         }
     </style>
@@ -81,21 +101,19 @@
                         <!-- Update the form tag to include a unique identifier -->
                         <form method="post" id="updateForm_{{ missing_person.id }}">
                             {% csrf_token %}
-                            <input type="hidden" name="missing_person" value="{{ missing_person.id }}">
                             <select name="status">
                                 <option value="Searching" {% if missing_person.status == 'Searching' %}selected{% endif %}>Searching</option>
                                 <option value="Found" {% if missing_person.status == 'Found' %}selected{% endif %}>Found</option>
                             </select>
                             <button type="submit" class="button">Update Status</button>
                         </form>
+                        
                         <a href="{% url 'missing_person_details' missing_person.id %}" class="button">More</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'police_home' %}" class="go-back-link">Go Back Home</a>
 </body>
 </html>
-
-
-

@@ -202,7 +202,7 @@ def adminfeedback(request):
 
 def logout_view(request):
     request.session.flush() 
-    return redirect('login')  
+    return redirect('home')  
 
 # def logout_view(request):
 #     logout(request)
@@ -251,8 +251,27 @@ def report_missing_person(request):
     return render(request, 'report_missing_person.html', {'form': form})
 
 
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import MissingPerson
+
 def missing_person_details(request, missing_person_id):
     missing_person = get_object_or_404(MissingPerson, id=missing_person_id)
+    
+    if request.method == 'POST':
+        # Retrieve the selected status from the form data
+        status = request.POST.get('status')
+        
+        # Update the status of the missing person object
+        missing_person.status = status
+        
+        # Save the changes to the database
+        missing_person.save()
+        
+        # Redirect to the same page to prevent form resubmission
+        return redirect('missing_person_details', missing_person_id=missing_person_id)
+    
+    # If the request method is GET, render the template with the missing person details
     return render(request, 'admin/missing_person_details.html', {'missing_person': missing_person})
 
 

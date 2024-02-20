@@ -68,7 +68,30 @@
     <form method="post" action="{% url 'police_station_registration' %}">
         {% csrf_token %}
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+<input type="text" id="username" name="username" required><br>
+<span id="username-error" style="color: red;"></span>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const usernameError = document.getElementById('username-error');
+
+    // Function to validate username
+    function validateUsername() {
+        const username = usernameInput.value.trim();
+        const regex = /^[a-zA-Z0-9_]+$/; // Regular expression to allow only alphanumeric characters and underscores
+
+        if (!regex.test(username)) {
+            usernameError.textContent = 'Username must contain only letters, numbers, and underscores';
+            return false;
+        } else {
+            usernameError.textContent = '';
+            return true;
+        }
+    }
+
+    // Event listener for input event to trigger validation
+    usernameInput.addEventListener('input', validateUsername);
+</script>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br>
