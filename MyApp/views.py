@@ -202,7 +202,7 @@ def adminfeedback(request):
 
 def logout_view(request):
     request.session.flush() 
-    return redirect('home')  
+    return redirect('index')  
 
 # def logout_view(request):
 #     logout(request)
