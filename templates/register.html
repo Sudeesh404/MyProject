@@ -1,5 +1,6 @@
-
+{% extends "index.html" %}
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,7 @@
         {{ form.password2.label_tag }}
         {{ form.password2 }}
         <div class="error-container" id="confirm-password-error"></div> <!-- Error container for confirm password -->
-        <button type="submit" id="submit-button">Register</button>
+        <button type="submit" id="submit-button3">Register</button>
     </div>
 </form>
 <script>
@@ -75,3 +76,4 @@
     document.getElementById('id_password1').addEventListener('input', validatePassword);
     document.getElementById('id_password2').addEventListener('input', validateConfirmPassword);
 </script>
+{% endblock  %}

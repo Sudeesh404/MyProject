@@ -42,6 +42,7 @@ def register(request):
 def index(request):
     
     return render(request,'index.html')
+
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
