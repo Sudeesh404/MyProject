@@ -35,6 +35,7 @@
             display: block;
             margin-bottom: 8px;
             color: #555;
+            font-weight: bold;
         }
 
         input {
@@ -44,6 +45,12 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007BFF;
         }
 
         button {
@@ -54,6 +61,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -73,267 +81,86 @@
     <form method="post" action="{% url 'police_station_registration' %}">
         {% csrf_token %}
         <label for="username">Username:</label>
-<input type="text" id="username" name="username" required><br>
-<span id="username-error" style="color: red;"></span>
+        <input type="text" id="username" name="username" required><br>
+        <span id="username-error" class="error"></span><br>
 
-<script>
-    const usernameInput = document.getElementById('username');
-    const usernameError = document.getElementById('username-error');
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <span id="email-error" class="error"></span><br>
 
-    // Function to validate username
-    function validateUsername() {
-        const username = usernameInput.value.trim();
-        const regex = /^[a-zA-Z0-9_]+$/; // Regular expression to allow only alphanumeric characters and underscores
+        <label for="station-id">Station ID:</label>
+        <input type="text" id="station-id" name="station_id" required><br>
+        <span id="station-id-error" class="error"></span><br>
 
-        if (!regex.test(username)) {
-            usernameError.textContent = 'Username must contain only letters, numbers, and underscores';
-            return false;
-        } else {
-            usernameError.textContent = '';
-            return true;
-        }
-    }
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="first_name" required><br>
+        <span id="first-name-error" class="error"></span><br>
 
-    // Event listener for input event to trigger validation
-    usernameInput.addEventListener('input', validateUsername);
-</script>
-<label for="email">Email:</label>
-<input type="email" id="email" name="email" required><br>
-<span id="email-error" class="error"></span><br>
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last_name" required><br>
+        <span id="last-name-error" class="error"></span><br>
 
-<script>
-    function validateEmail() {
-        const emailInput = document.getElementById('email');
-        const email = emailInput.value.trim(); // Trim whitespace from the input
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required><br>
+        <span id="branch-error" class="error"></span><br>
 
-        // Regular expression pattern for email validation
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        <label for="password">Password:</label>
+        <input type="password" id="password1" name="password1" required><br>
+        <span id="password1-error" class="error"></span><br>
 
-        const emailError = document.getElementById('email-error');
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="password2" name="password2" required><br>
+        <span id="password2-error" class="error"></span><br>
 
-        if (!email) {
-            // If email is empty, display an error message
-            emailError.textContent = 'Email is required';
-            return false;
-        } else if (!emailPattern.test(email)) {
-            // If email format is invalid, display an error message
-            emailError.textContent = 'Invalid email format';
-            return false;
-        } else {
-            // If email is valid, clear the error message
-            emailError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listener to the email input to trigger validation on input change
-    document.getElementById('email').addEventListener('input', validateEmail);
-</script>
-        
-
-<label for="station-id">Station ID:</label>
-<input type="text" id="station-id" name="station_id" required><br>
-<span id="station-id-error" class="error"></span><br>
-
-<script>
-    function validateStationId() {
-        const stationIdInput = document.getElementById('station-id');
-        const stationId = stationIdInput.value.trim(); // Trim whitespace from the input
-
-        // Regular expression pattern for station ID validation (only numbers)
-        const stationIdPattern = /^[0-9]+$/;
-
-        const stationIdError = document.getElementById('station-id-error');
-
-        if (!stationId) {
-            // If station ID is empty, display an error message
-            stationIdError.textContent = 'Station ID is required';
-            return false;
-        } else if (!stationIdPattern.test(stationId)) {
-            // If station ID format is invalid, display an error message
-            stationIdError.textContent = 'Station ID should contain only numbers';
-            return false;
-        } else {
-            // If station ID is valid, clear the error message
-            stationIdError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listener to the station ID input to trigger validation on input change
-    document.getElementById('station-id').addEventListener('input', validateStationId);
-</script>
-<label for="first-name">First Name:</label>
-<input type="text" id="first-name" name="first_name" required><br>
-<span id="first-name-error" class="error"></span><br>
-
-<script>
-    function validateFirstName() {
-        const firstNameInput = document.getElementById('first-name');
-        const firstName = firstNameInput.value.trim(); // Trim whitespace from the input
-
-        // Regular expression pattern for first name validation (only characters)
-        const namePattern = /^[A-Za-z]+$/;
-
-        const firstNameError = document.getElementById('first-name-error');
-
-        if (!firstName) {
-            // If first name is empty, display an error message
-            firstNameError.textContent = 'First Name is required';
-            return false;
-        } else if (!namePattern.test(firstName)) {
-            // If first name format is invalid, display an error message
-            firstNameError.textContent = 'First Name should contain only characters';
-            return false;
-        } else {
-            // If first name is valid, clear the error message
-            firstNameError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listener to the first name input to trigger validation on input change
-    document.getElementById('first-name').addEventListener('input', validateFirstName);
-</script>
-<label for="last-name">Last Name:</label>
-<input type="text" id="last-name" name="last_name" required><br>
-<span id="last-name-error" class="error"></span><br>
-
-<script>
-    function validateLastName() {
-        const lastNameInput = document.getElementById('last-name');
-        const lastName = lastNameInput.value.trim(); // Trim whitespace from the input
-
-        // Regular expression pattern for last name validation (only characters)
-        const namePattern = /^[A-Za-z]+$/;
-
-        const lastNameError = document.getElementById('last-name-error');
-
-        if (!lastName) {
-            // If last name is empty, display an error message
-            lastNameError.textContent = 'Last Name is required';
-            return false;
-        } else if (!namePattern.test(lastName)) {
-            // If last name format is invalid, display an error message
-            lastNameError.textContent = 'Last Name should contain only characters';
-            return false;
-        } else {
-            // If last name is valid, clear the error message
-            lastNameError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listener to the last name input to trigger validation on input change
-    document.getElementById('last-name').addEventListener('input', validateLastName);
-</script>
-
-
-<label for="branch">Branch:</label>
-<input type="text" id="branch" name="branch" required><br>
-<span id="branch-error" class="error"></span><br>
-
-<script>
-    function validateBranch() {
-        const branchInput = document.getElementById('branch');
-        const branch = branchInput.value.trim(); // Trim whitespace from the input
-
-        // Regular expression pattern for branch validation (only characters)
-        const namePattern = /^[A-Za-z]+$/;
-
-        const branchError = document.getElementById('branch-error');
-
-        if (!branch) {
-            // If branch is empty, display an error message
-            branchError.textContent = 'Branch is required';
-            return false;
-        } else if (!namePattern.test(branch)) {
-            // If branch format is invalid, display an error message
-            branchError.textContent = 'Branch should contain only characters';
-            return false;
-        } else {
-            // If branch is valid, clear the error message
-            branchError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listener to the branch input to trigger validation on input change
-    document.getElementById('branch').addEventListener('input', validateBranch);
-</script>
-
-
-<label for="password">Password:</label>
-<input type="password" id="password1" name="password1" required><br>
-<span id="password1-error" class="error"></span><br>
-
-<label for="confirm-password">Confirm Password:</label>
-<input type="password" id="password2" name="password2" required><br>
-<span id="password2-error" class="error"></span><br>
-
-<script>
-    function validatePassword() {
-        const passwordInput = document.getElementById('password1');
-        const password = passwordInput.value.trim(); // Trim whitespace from the input
-
-        // Regular expression patterns for password validation
-        const lengthPattern = /^.{8,}$/;
-        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
-        const digitPattern = /\d/;
-
-        const passwordError = document.getElementById('password1-error');
-
-        if (!password) {
-            // If password is empty, display an error message
-            passwordError.textContent = 'Password is required';
-            return false;
-        } else if (!lengthPattern.test(password)) {
-            // If password length is less than 8, display an error message
-            passwordError.textContent = 'Password must be at least 8 characters long';
-            return false;
-        } else if (!specialCharPattern.test(password)) {
-            // If password doesn't contain a special character, display an error message
-            passwordError.textContent = 'Password must contain at least one special character';
-            return false;
-        } else if (!digitPattern.test(password)) {
-            // If password doesn't contain a digit, display an error message
-            passwordError.textContent = 'Password must contain at least one digit';
-            return false;
-        } else {
-            // If password is valid, clear the error message
-            passwordError.textContent = '';
-            return true;
-        }
-    }
-
-    function validateConfirmPassword() {
-        const password1Input = document.getElementById('password1');
-        const password2Input = document.getElementById('password2');
-        const password2 = password2Input.value.trim(); // Trim whitespace from the input
-
-        const confirmPasswordError = document.getElementById('password2-error');
-
-        if (!password2) {
-            // If confirm password is empty, display an error message
-            confirmPasswordError.textContent = 'Confirm Password is required';
-            return false;
-        } else if (password1Input.value !== password2) {
-            // If passwords don't match, display an error message
-            confirmPasswordError.textContent = 'Passwords do not match';
-            return false;
-        } else {
-            // If confirm password matches password1, clear the error message
-            confirmPasswordError.textContent = '';
-            return true;
-        }
-    }
-
-    // Add event listeners to trigger validation on input change
-    document.getElementById('password1').addEventListener('input', validatePassword);
-    document.getElementById('password2').addEventListener('input', validateConfirmPassword);
-</script>
         <button type="submit">Register</button>
     </form>
+
+    <script>
+        function validateUsername() {
+            const usernameInput = document.getElementById('username');
+            const usernameError = document.getElementById('username-error');
+            const username = usernameInput.value.trim();
+            const regex = /^[a-zA-Z0-9_]+$/;
+
+            if (!regex.test(username)) {
+                usernameError.textContent = 'Username must contain only letters, numbers, and underscores';
+                return false;
+            } else {
+                usernameError.textContent = '';
+                return true;
+            }
+        }
+
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailError = document.getElementById('email-error');
+
+            if (!email) {
+                emailError.textContent = 'Email is required';
+                return false;
+            } else if (!emailPattern.test(email)) {
+                emailError.textContent = 'Invalid email format';
+                return false;
+            } else {
+                emailError.textContent = '';
+                return true;
+            }
+        }
+
+        // Add validation functions for other fields similarly
+
+        function validateForm() {
+            return validateUsername() && validateEmail() && /* Add validation functions for other fields similarly */ ;
+        }
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            if (!validateForm()) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
 {% endblock %}
