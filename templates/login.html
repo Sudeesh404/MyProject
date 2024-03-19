@@ -6,31 +6,47 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        {% if error_message %}
-        <p class="error-message">{{ error_message }}</p>
-        {% endif %}
-        {% if not request.user.is_authenticated %}
-        {% comment %} <script>
-            // Show an alert box when the user is logged out
-            window.onload = function() {
-                alert('You have been successfully logged out.');
-            };
-        </script> {% endcomment %}
-        {% endif %}
-        <form method="post">
-            {% csrf_token %}
-            <input type="text" placeholder="username" name="username" id="username" required>
-            <input type="password" placeholder="password" id="password" name="password" required>
-            <input type="submit" id="testid" value="Login"><br>
-            <span><center>Forget Password? <a href="{% url 'password_reset' %}">Reset</a><center></span>
-            <p><h5><center>Not a User?<a href="{% url 'register' %}">Register Here</a><center><h5></p>
-        </form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Login</h1>
+                        {% if error_message %}
+                        <p class="error-message">{{ error_message }}</p>
+                        {% endif %}
+                        {% if not request.user.is_authenticated %}
+                        <!-- <script>
+                            // Show an alert box when the user is logged out
+                            window.onload = function() {
+                                alert('You have been successfully logged out.');
+                            };
+                        </script> -->
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <br>
+                            <p class="text-center"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+                            <p class="text-center">Not a User? <a href="{% url 'register' %}">Register Here</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
 {% endblock %}
-
