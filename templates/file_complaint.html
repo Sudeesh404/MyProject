@@ -60,6 +60,21 @@
         button:hover {
             background-color: #0056b3;
         }
+        .go-back-link:hover {
+            background-color: #0056b3;
+        }
+        .go-back-link {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            padding: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+            width: 100px;
+        }
+    </styl
     </style>
     <!-- {% block title %}Report{% endblock title %} -->
 </head>
@@ -81,7 +96,7 @@
             </p>
 
             <p><strong>Describe the incident</strong>: <br />
-                <textarea name="Description" rows="12" style="width: 95%; font-size: 90%;"></textarea>
+                <textarea name="Description" rows="25" style="width: 95%; font-size: 90%;"></textarea>
             </p>
 
             <p><strong>Evidence:</strong> <br />
@@ -104,6 +119,7 @@
         </p>
     </form>
 </div>
+<center><a href="{% url 'user_landing' %}" class="go-back-link">Back</a></center>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
