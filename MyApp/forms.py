@@ -91,3 +91,12 @@ class PoliceStationRegistrationForm(UserCreationForm):
                 branch=self.cleaned_data['branch'],
             )
         return user
+
+
+from django import forms
+from .models import BlogPost
+
+class BlogPostForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = ['heading', 'description', 'image']

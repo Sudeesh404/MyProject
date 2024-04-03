@@ -93,3 +93,14 @@ class PoliceStation(models.Model):
         return f"{self.branch} - {self.station_id}"
 
 
+class BlogPost(models.Model):
+    admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    heading = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    views = models.IntegerField(default=0)
+
+
+    def _str_(self):
+        return self.heading
