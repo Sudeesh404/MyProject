@@ -27,7 +27,7 @@ urlpatterns = [
     path('complaints/', views.complaint_list, name='complaint_list'),
     path('generate_pdf/<int:complaint_id>/', generate_pdf, name='generate_pdf'),
     path('view_user_complaints/', view_user_complaints, name='view_user_complaints'),
-    path('login/', views.login_view, name='login'),
+    path('login', views.login_view, name='login'),
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
@@ -45,5 +45,6 @@ urlpatterns = [
     path('missing_person_details/<int:missing_person_id>/', missing_person_details, name='missing_person_details'),
     path('report_missing_person/', report_missing_person, name='report_missing_person'),
     path('police_station_registration/', views.police_station_registration, name='police_station_registration'),
-    path('police_home/', views.police_home, name='police_home')
+    path('police_home/', views.police_home, name='police_home'),
+    path('add/', views.add_blog_post, name='add_blog_post'),
 ]

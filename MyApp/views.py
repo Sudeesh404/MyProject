@@ -323,3 +323,19 @@ def police_home(request):
     # Add logic here if needed
     return render(request, 'police_home.html')
 
+
+
+
+from .forms import BlogPostForm
+def add_blog_post(request):
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog_post = form.save(commit=False)
+            blog_post.admin = request.user
+            blog_post.save()
+            return redirect('/add')  # Redirect to the blog post list page
+    else:
+        form = BlogPostForm()
+
+    return render(request, 'admin/add_blog_post.html', {'form': form})
