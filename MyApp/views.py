@@ -24,6 +24,7 @@ from xhtml2pdf import pisa
 from django.utils import timezone
 #mainproject
 from .forms import PoliceStationRegistrationForm
+from .models import BlogPost
 
 def register(request):
     if request.method == 'POST':
