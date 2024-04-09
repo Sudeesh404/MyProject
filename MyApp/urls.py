@@ -47,6 +47,7 @@ urlpatterns = [
     path('police_station_registration/', views.police_station_registration, name='police_station_registration'),
     path('police_home/', views.police_home, name='police_home'),
     path('add/', views.add_blog_post, name='add_blog_post'),
-    path('blog_post_list/', views.blog_post_list, name='blog_post_list')
+    path('blog_post_list/', views.blog_post_list, name='blog_post_list'),
+    path('profile/',views.user_profile, name='user_profile'),
 
 ]
