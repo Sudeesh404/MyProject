@@ -4,94 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: flex;
         }
 
-        aside {
+        header {
+            background-color: #394D79;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-button {
+            background-color: #FF6347;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .sidebar {
             background-color: #333;
             color: white;
             padding: 20px;
             width: 250px;
             min-height: 100vh;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            float: left;
         }
 
-        header {
-            background-color: #007BFF;
+        .content {
+            padding: 70px;
+            margin-left: 270px; /* Adjusted to accommodate the sidebar width and padding */
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #394D79;
             color: white;
-            padding: 15px;
-            width: 100%;
-            text-align: center;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
 
-        main {
-            flex: 1;
+        .card-body {
             padding: 20px;
         }
 
-        nav {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
+        .card-title {
+            margin-bottom: 0;
         }
 
-        .button {
-            display: inline-block;
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu li a {
+            display: block;
             padding: 10px;
-            margin: 10px 0;
+            color: white;
             text-decoration: none;
-            color: #fff;
-            background-color: #0056b3;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
+            transition: background-color 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #004080;
-        }
-        .logo {
-            position: absolute; 
-            top: 200px;
-            left: 400px;
-            transform: translateX(-10%);
-            max-width: 100%; 
-            height: auto;
+        .sidebar-menu li a:hover {
+            background-color: #555;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
+    <!-- Include user header -->
+    {% include 'citizenheader.html' %}
 
-    <aside>
+    <header>
         <h2>User Dashboard</h2>
-        <nav>
-            <a href="{% url 'index' %}" class="button">Home</a>
-            <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
-            <a href="{% url 'submit_feedback' %}" class="button">Feedback</a>
-            <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
-            <a href="{% url 'most_wanted_list' %}" class="button">Most Wanted</a>
-            <a href="{% url 'report_missing_person' %}" class="button">Missing Person</a>
-            <a href="{% url 'logout_view' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
-                {% csrf_token %}
-            </form>
-        </nav>
-    </aside>
-
-    <main>
-        <header>
-            <h1>Welcome, {{ user.username }}!</h1>
-        </header>
-        <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo" class="logo">
-        
-    </main>
-
+        <a href="{% url 'logout_view' %}" class="button logout-button">Logout</a>
+    </header>
+    <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        <ul class="sidebar-menu">
+            <li><h3><b>Dashboard</b></h3></li><br>
+            <li><a href="{% url 'index' %}" class="card-header">Home</a></li>
+            <li><a href="{% url 'file_complaint' %}" class="card-header">File a Complaint</a></li>
+            <li><a href="{% url 'submit_feedback' %}" class="card-header">Feedback</a></li>
+            <li><a href="{% url 'view_user_complaints' %}" class="card-header">View Your Complaints</a></li>
+            <li><a href="{% url 'most_wanted_list' %}" class="card-header">Most Wanted</a></li>
+            <li><a href="{% url 'report_missing_person' %}" class="card-header">Missing Person</a></li>
+            <li><a href="" class="card-header">Blog</a></li>
+            <!-- Add more sidebar options as needed -->
+        </ul>
+    </div>
+    <div class="content">
+        <!-- Content as Bootstrap cards -->
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Your Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Customize this section with your user-specific statistics.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more cards for user-specific content -->
+        </div>
+    </div>
 </body>
 </html>

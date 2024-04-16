@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #394D79;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #394D79;
+        }
+
+        .profile-info {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h3>Greetings {{user.username}}</h3>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="profile-info">
+                    <h2><center>User Details</center></h2>
+                    <center><img src="{% static 'assets/img/profilepicture.png' %}" alt="Profile Picture" style="width: 100px; height: 100px;"></center>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Date Joind:</strong> {{ user.date_joined }}</p>
+                    <p><strong>Last Login:</strong> {{ user.last_login }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
