@@ -1,0 +1,64 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Echo - Online Crime Reporting</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/police.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <style>
+    .session a {
+      color: white; /* Set color to white */
+    }
+  </style>
+</head>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top" style="background-color: #394D79;">
+  <div class="container d-flex align-items-center">
+    <h1 class="logo me-auto"><a href="index.html">ECHO</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto" href="/">Home</a></li>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+    <!-- Session -->
+    <div class="session">
+      <!-- You can add your session content here -->
+      <a href="#" style="margin-left: 30px;"><img src="{% static 'assets/img/profilepicture.png' %}" alt="Profile Picture" style="width: 50px; height: 50px;"></a>
+      <a href="{% url 'user_profile' %}" style="margin-left: 10px;">My Account</a>
+      <!-- Add more session-related content as needed -->
+    </div>
+  </div>
+</header><!-- End Header -->
+
+<body>
+
+  <!-- Add your page content here -->
+
+</body>
+
+</html>
