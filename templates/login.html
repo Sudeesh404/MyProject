@@ -1,52 +1,115 @@
-{% extends 'index.html' %}
-{% load static %}
-{% block content %}
+
+{% load static  %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Echo - Online Crime Reporting</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/police.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
 </head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="text-center mb-4">Login</h1>
-                        {% if error_message %}
-                        <p class="error-message">{{ error_message }}</p>
-                        {% endif %}
-                        {% if not request.user.is_authenticated %}
-                        <!-- <script>
-                            // Show an alert box when the user is logged out
-                            window.onload = function() {
-                                alert('You have been successfully logged out.');
-                            };
-                        </script> -->
-                        {% endif %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
-                            <br>
-                            <p class="text-center"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
-                            <p class="text-center">Not a User? <a href="{% url 'register' %}">Register Here</a></p>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top" style="background-color: #394D79;">
+    <div class="container d-flex align-items-center">
+        <h1 class="logo me-auto"><a href="index.html">ECHO</a></h1>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto" href="\">Home</a></li>
+               
+                <li><a class="nav-link scrollto active" href="login">Login</a></li>
+              
+                <li class="dropdown"><a href="#"><span></span>Register<i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a class="nav-link scrollto" href="register/">Register as User</a></li>
+                        <li><a href="police_station_registration/">Register as Police Station</a></li>
+                    </ul>
+                </li>
+               
+               
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+    </div>
+</header><!-- End Header -->
+<body style="background-color: #F0F8FF;">
+    <section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="{% static 'assets/img/logi.png' %}"
+            class="img-fluid" alt="Phone image">
+        </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          {% if error_message %}
+          <p class="error-message">{{ error_message }}</p>
+          {% endif %}
+          {% if not request.user.is_authenticated %}
+          {% comment %} <script>
+              // Show an alert box when the user is logged out
+              window.onload = function() {
+                  alert('You have been successfully logged out.');
+              };
+          </script> {% endcomment %}
+          {% endif %}
+          <form method="post">
+              {% csrf_token %}
+          <h2 style="text-align: center; color: #394D79;">Welcome Back!</h2>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              
+              <input type="text" placeholder="username" name="username" id="username" required>
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" placeholder="password" id="password" name="password" required>
+            </div>
+  
+            <div class="d-flex justify-content-around align-items-center mb-4">
+              <!-- Checkbox -->
+              <div class="form-check">
+                <p class="text-center"><a href="{% url 'password_reset' %}" style="color: #394D79;">Forgot Password?</a></p>
+                <p class="text-center">Not a User? <a href="{% url 'register' %}" style="color: #394D79;">Register Here</a></p>
+            </div>
+            
+              
+            </div>
+  
+            <!-- Submit button -->
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="testid" style="background-color: #394D79;">Sign In</button>
+            </div>
                         </form>
                     </div>
+                  </div>
                 </div>
-            </div>
+              </section>
         </div>
     </div>
 </body>
 </html>
-{% endblock %}
+
