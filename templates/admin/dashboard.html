@@ -1,97 +1,136 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "admin.css" %}">
-    <title>Admin</title>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #394D79;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-button {
+            background-color: #FF6347;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            width: 250px;
+            min-height: 100vh;
+            float: left;
+        }
+
+        .content {
+            padding: 70px;
+            margin-left: 270px; /* Adjusted to accommodate the sidebar width and padding */
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #394D79;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            margin-bottom: 0;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar-menu li a:hover {
+            background-color: #555;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Include user header -->
+    {% include 'header.html' %}
+
     <header>
-        <h1>Admin Dashboard</h1>
+        <h2>User Dashboard</h2>
+        <a href="{% url 'logout_view' %}" class="button logout-button">Logout</a>
     </header>
     <div class="sidebar">
-        <a href="#">Dashboard</a>
-        <a href="{% url 'user_account' %} id="us">Users</a>
-        <a href="{% url "complaint_list" %}">Complaints</a>
-        <a href="{% url "adminfeedback" %}">Feedback</a>
-        <a href="{% url "add_criminal" %}">Add Most Wanted</a>
-        <a href="{% url 'most_wanted_list' %}" class="button">Most wanted</a>
-        <a href="{% url 'missing_person_lista' %}">Missing Person Report</a>
-        <a href="{% url "logout_view" %}">Logout</a>
-
-        <!-- Add more sidebar options as needed -->
+        <!-- Sidebar content goes here -->
+        <ul class="sidebar-menu">
+            <li><h3><b>Dashboard</b></h3></li><br>
+            <li><a href="{% url 'index' %}" class="card-header">Home</a></li>
+            <li><a href="{% url 'file_complaint' %}" class="card-header">File a Complaint</a></li>
+            <li><a href="{% url 'submit_feedback' %}" class="card-header">Feedback</a></li>
+            <li><a href="{% url 'view_user_complaints' %}" class="card-header">View Your Complaints</a></li>
+            <li><a href="{% url 'most_wanted_list' %}" class="card-header">Most Wanted</a></li>
+            <li><a href="{% url 'report_missing_person' %}" class="card-header">Missing Person</a></li>
+            <li><a href="" class="card-header">Blog</a></li>
+            <!-- Add more sidebar options as needed -->
+        </ul>
     </div>
     <div class="content">
-            <div class="info-box">
-                <div class="box-header">
-                    <h2>Users</h2>
-                </div>
-                <div class="box-content">
-                    <p>Number of Users: 10</p>
-                </div>
-            </div>
-            <div class="info-box">
-                <div class="box-header">
-                    <h2>Complaints</h2>
-                </div>
-                <div class="box-content">
-                    <p>Number of Complaints: 10</p>
+        <!-- Content as Bootstrap cards -->
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Your Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Customize this section with your user-specific statistics.</p>
+                    </div>
                 </div>
             </div>
-            <div class="info-box">
-                <div class="box-header">
-                    <h2>Most Wanted</h2>
-                </div>
-                <div class="box-content">
-                    <p>Number of People: 20</p>
-                </div>
-            </div>
-            <div class="info-box">
-                <div class="box-header">
-                    <h2>Solved Complaints</h2>
-                </div>
-                <div class="box-content">
-                    <p>50</p>
-                </div>
-            </div>
-            <div style="width: 70%; height: 60%;">
-            <canvas id="crimeChart"></canvas>
-            </div> 
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                // Static data for demonstration
-                const months = ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October', 'November'];
-                const crimes = [10, 5, 12, 8, 15, 7, 6, 11, 9, 5, 3];
-            
-                // Get the canvas element
-                const ctx = document.getElementById('crimeChart').getContext('2d');
-            
-                // Create the bar chart
-                const chart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: months,
-                        datasets: [{
-                            label: 'Crimes',
-                            data: crimes,
-                            backgroundColor: 'red',
-                            borderColor: 'red',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            </script>
-            
-        
+            <!-- Add more cards for user-specific content -->
+        </div>
     </div>
 </body>
 </html>
