@@ -49,5 +49,6 @@ urlpatterns = [
     path('add/', views.add_blog_post, name='add_blog_post'),
     path('blog_post_list/', views.blog_post_list, name='blog_post_list'),
     path('profile/',views.user_profile, name='user_profile'),
+    path('send_sos/', views.send_sos, name='send_sos'),
 
 ]

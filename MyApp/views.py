@@ -353,3 +353,49 @@ def blog_post_list(request):
 def user_profile(request):
     user = request.user
     return render(request, 'user_profile.html', {'user': user})
+
+import requests
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import SOSAlert
+
+def get_location_address(latitude, longitude):
+    # OpenStreetMap Nominatim API endpoint
+    url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=json"
+
+    response = requests.get(url)
+    data = response.json()
+
+    if 'display_name' in data:
+        return data['display_name']
+    else:
+        return "Unknown location"
+
+def send_sos(request):
+    if request.method == 'POST':
+        # Retrieve user's location from POST data
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        
+        # Get location address
+        location_address = get_location_address(latitude, longitude)
+        
+        # Create SOSAlert instance
+        user = request.user if request.user.is_authenticated else None
+        
+        # Specify the recipient email address
+        recipient_email = 'isushi2023x@gmail.com'  # Your email address
+        
+        # Send email notification
+        send_mail(
+            'SOS Alert',
+            f'SOS Alert from an anonymous user at {location_address}. Latitude: {latitude}, Longitude: {longitude}',
+            settings.EMAIL_HOST_USER,  # Sender's email address from Django settings
+            [recipient_email],  # List of recipient email addresses
+            fail_silently=False,
+        )
+        
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error'})
