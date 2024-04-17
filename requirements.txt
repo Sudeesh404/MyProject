@@ -126,6 +126,8 @@ python-bidi==0.4.2
 python-dateutil==2.9.0.post0
 python-json-logger==2.0.7
 pytz==2023.3.post1
+pywin32==306
+pywinpty==2.0.13
 PyYAML==6.0.1
 pyzmq==25.1.2
 qrcode==7.4.2
@@ -153,6 +155,11 @@ sqlparse==0.4.2
 stack-data==0.6.3
 svglib==1.5.1
 tenacity==8.2.3
+tensorboard==2.16.2
+tensorboard-data-server==0.7.2
+tensorflow==2.16.1
+tensorflow-intel==2.16.1
+tensorflow-io-gcs-filesystem==0.31.0
 termcolor==2.4.0
 terminado==0.18.1
 threadpoolctl==3.4.0
@@ -179,4 +186,3 @@ widgetsnbextension==4.0.10
 wrapt==1.16.0
 wsproto==1.2.0
 xhtml2pdf==0.2.13
-
