@@ -96,7 +96,7 @@
 </head>
 <body>
     <!-- Include user header -->
-    {% include 'header.html' %}
+    {% include 'citizenheader.html' %}
 
     <header>
         <h2>User Dashboard</h2>
@@ -107,12 +107,13 @@
         <ul class="sidebar-menu">
             <li><h3><b>Dashboard</b></h3></li><br>
             <li><a href="{% url 'index' %}" class="card-header">Home</a></li>
-            <li><a href="{% url 'file_complaint' %}" class="card-header">File a Complaint</a></li>
-            <li><a href="{% url 'submit_feedback' %}" class="card-header">Feedback</a></li>
-            <li><a href="{% url 'view_user_complaints' %}" class="card-header">View Your Complaints</a></li>
-            <li><a href="{% url 'most_wanted_list' %}" class="card-header">Most Wanted</a></li>
-            <li><a href="{% url 'report_missing_person' %}" class="card-header">Missing Person</a></li>
-            <li><a href="" class="card-header">Blog</a></li>
+            <li><a href="{% url 'user_account' %}" class="card-header">Users</a></li>
+            <li><a href="{% url 'complaint_list' %}" class="card-header">Case Reports</a></li>
+            <li><a href="{% url 'adminfeedback' %}" class="card-header">Feedback</a></li>
+            <li><a href="{% url 'add_criminal' %}" class="card-header">Add Criminals</a></li>
+            <li><a href="{% url 'most_wanted_list' %}" class="card-header">Wanted Criminals</a></li>
+            <li><a href="missing_person_lista" class="card-header">Missing Report</a></li>
+            <li><a href="add_blog_post" class="card-header">Blog</a></li>
             <!-- Add more sidebar options as needed -->
         </ul>
     </div>
@@ -125,7 +126,7 @@
                         <h5 class="card-title">Your Statistics</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Customize this section with your user-specific statistics.</p>
+                        <p class="card-text"></p>
                     </div>
                 </div>
             </div>

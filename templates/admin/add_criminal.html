@@ -60,10 +60,11 @@
 </head>
 <body>
 
+    <center><h2>Add Criminal</h2></center>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Add Criminal</button>
+        <button type="submit">Submit</button>
     </form>
 
 </body>
