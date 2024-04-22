@@ -343,11 +343,13 @@ def add_blog_post(request):
 
 
 @never_cache
-@login_required(login_url="/auth_app/handlelogin/")
+@login_required(login_url="/login/")
 def blog_post_list(request):
     blog_posts = BlogPost.objects.all()
     top_three_posts = BlogPost.objects.order_by('-views')[:3]
-    return render(request, 'customer/blog_post_list.html', {'blog_posts': blog_posts,'top_three_posts':top_three_posts})
+    return render(request, 'blog_post_list.html', {'blog_posts': blog_posts,'top_three_posts':top_three_posts})
+
+
 
 @login_required
 def user_profile(request):

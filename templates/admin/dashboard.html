@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +45,7 @@
 
         .content {
             padding: 70px;
-            margin-left: 270px; /* Adjusted to accommodate the sidebar width and padding */
+            margin-left: 270px;
         }
 
         .card {
@@ -94,6 +95,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Include user header -->
     {% include 'citizenheader.html' %}
@@ -113,25 +115,64 @@
             <li><a href="{% url 'add_criminal' %}" class="card-header">Add Criminals</a></li>
             <li><a href="{% url 'most_wanted_list' %}" class="card-header">Wanted Criminals</a></li>
             <li><a href="missing_person_lista" class="card-header">Missing Report</a></li>
-            <li><a href="add_blog_post" class="card-header">Blog</a></li>
-            <!-- Add more sidebar options as needed -->
+            <li><a href={% url 'add_blog_post' %} class="card-header">Blog</a></li>
         </ul>
     </div>
     <div class="content">
         <!-- Content as Bootstrap cards -->
         <div class="row">
-            <div class="col-md-3 mb-3">
+            <!-- First set of cards -->
+            <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Your Statistics</h5>
+                        <h5 class="card-title">Registererd Users</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text"></p>
+                        <p class="card-text">13</p>
                     </div>
                 </div>
             </div>
-            <!-- Add more cards for user-specific content -->
+            <!-- Second set of cards -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Case Reports</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">14</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Third set of cards -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Missing Cases</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">7</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fourth set of cards -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Feedbacks</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
         </div>
     </div>
 </body>
+
 </html>

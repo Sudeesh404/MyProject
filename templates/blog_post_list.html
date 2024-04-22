@@ -1,97 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+{% include 'citizenheader.html' %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-        aside {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            width: 250px;
-            min-height: 100vh;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
+<div class="container mt-5">
 
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 15px;
-            width: 100%;
-            text-align: center;
-        }
+    <div style="padding: 5px;">
 
-        main {
-            flex: 1;
-            padding: 20px;
-        }
+      <!-- Container with two columns using Bootstrap -->
+      <div class="row">
+        <!-- Column 1 with width 8 -->
+        <div class="col-md-8">
+          <div class="container">
+            <div class="row">
+              {% for blog_post in blog_posts %}
+                <div class="col-md-4 mt-5 ">
+                  <!-- Content for column 1 goes here -->
+                  
+                  <p class="card-text">
+                    <i class="fas fa-thumbs-up"></i> Likes: {{ blog_post.like_set.count }}
+                  </p>
+                  <p class="card-text" >
+                    <i class="fas fa-eye"></i> Views: {{ blog_post.views }}
+                  </p>
+                  <p class="card-text">
+                    <i class="far fa-calendar-alt"></i> Posted on: {{ blog_post.created_at }}
+                  </p>
+                  <p class="card-text">
+                    <i class="fas fa-user"></i> Admin: {{ blog_post.admin.first_name }}
+                  </p>
+                </div>
+                <!-- Column 2 with width 4 -->
+                <div class="col-md-8 mt-5">
+                  <!-- Your content for column 2 goes here -->
+                  <div class="card border-0" style="margin-top: 40px;"> <!-- Added margin-top -->
+                    <img src="{{ blog_post.image.url }}" class="card-img-top" alt="{{ blog_post.heading }}" style="max-width: 800px; height: 300px;">
+                    <div class="card-body">
+                      <h2 class="card-title">{{ blog_post.heading }}</h2>
+                      <p class="card-text" style="color: grey; text-align: justify; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical;">
+                        {{ blog_post.description }}
+                    </p>
+                    
+                      {% comment %} <a href="{% url 'blog_post_detail' blog_post.id %}" class="btn btn-success">Read more</a> {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
 
-        nav {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-        }
+        <!-- Column 2 with width 4 -->
+        <div class="col-md-4">
+          
+          <button type="button" class="btn btn-primary btn-block">Most Viewed</button>
+          
+       
+          <div style="padding: 5px;box-shadow: 5px 5px 10px #888888;">
 
-        .button {
-            display: inline-block;
-            padding: 10px;
-            margin: 10px 0;
-            text-decoration: none;
-            color: #fff;
-            background-color: #0056b3;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-        }
+            {% for blog_post in top_three_posts %}
+                  <div class="card border-2 col-md-8 mt-5 ml-5">
+                    <img src="{{ blog_post.image.url }}" class="card-img-top" alt="{{ blog_post.heading }}" style="max-width: 100%; height: 100px;">
+                    <div class="card-body">
+                      <h6 class="card-title">{{ blog_post.heading }}</h6>
+                      <p class="card-title" style="color: grey;">{{ blog_post.created_at|timesince }} ago</p>
 
-        .button:hover {
-            background-color: #004080;
-        }
-        .logo {
-            position: absolute; 
-            top: 200px;
-            left: 400px;
-            transform: translateX(-10%);
-            max-width: 100%; 
-            height: auto;
-        }
-    </style>
-</head>
-<body>
+                      {% comment %} <a href="{% url 'blog_post_detail' blog_post.id %}" class="btn btn-danger">Read more</a> {% endcomment %}
+                    </div>
+                  </div>
+                {% endfor %}
+          </div>
+          
+        </div>
+      </div>
 
-    <aside>
-        <h2>User Dashboard</h2>
-        <nav>
-            <a href="{% url 'index' %}" class="button">Home</a>
-            <a href="{% url 'file_complaint' %}" class="button">File a Complaint</a>
-            <a href="{% url 'submit_feedback' %}" class="button">Feedback</a>
-            <a href="{% url 'view_user_complaints' %}" class="button">View Your Complaints</a>
-            <a href="{% url 'most_wanted_list' %}" class="button">Most Wanted</a>
-            <a href="{% url 'report_missing_person' %}" class="button">Missing Person</a>
-            <a href="{% url 'logout_view' %}" class="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
-                {% csrf_token %}
-            </form>
-        </nav>
-    </aside>
+    </div>
+  </div>
 
-    <main>
-        <header>
-            <h1>Welcome, {{ user.username }}!</h1>
-        </header>
-        <img id="logo" src="/static/assets/img/logo_kerala.png" alt="Logo" class="logo">
-        
-    </main>
+<script src="https://kit.fontawesome.com/0c1a238acd.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-</body>
-</html>
+{% endblock body %}
