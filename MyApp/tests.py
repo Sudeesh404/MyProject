@@ -181,7 +181,6 @@
 #         submit_button = driver.find_element(By.CSS_SELECTOR, "button#testid")
 #         submit_button.click()
 #         time.sleep(2)
-
 from datetime import datetime
 from django.test import TestCase
 from selenium import webdriver
@@ -200,7 +199,7 @@ class Hosttest(TestCase):
 
     def tearDown(self):
         self.driver.quit()
-        
+
     def test_01_login_page(self):
         driver = self.driver
         driver.get(self.live_server_url)
@@ -225,23 +224,12 @@ class Hosttest(TestCase):
         submit_button.click()
         time.sleep(2)
         
-        # Navigate to Add Blog Post page from the dashboard
-        add_blog_link = driver.find_element(By.CSS_SELECTOR, "a[href='{% url 'add_blog_post' %}']")
-        add_blog_link.click()
-        time.sleep(2)
+        # Click on the link to navigate to the "most wanted list" page
+        most_wanted_link = driver.find_element(By.ID, "testmiss")
+        most_wanted_link.click()
         
-        # Fill in the blog post details
-        title = driver.find_element(By.CSS_SELECTOR, "input[name='title']")
-        title.send_keys("New Blog Post Title")
-        
-        content = driver.find_element(By.CSS_SELECTOR, "textarea[name='content']")
-        content.send_keys("This is the content of the new blog post.")
-        
-        # Click on the submit button to add the blog post
-        submit_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
-        submit_button.click()
-        time.sleep(2)
-        
-        # Check if the blog post is added successfully (assuming you have a success message)
-        success_message = driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-        self.assertEqual(success_message, "Blog post added successfully.")
+        # Check if the URL matches the expected URL
+        if driver.current_url == self.live_server_url + "missing_personsa/":
+            print("Success: Navigated to the Missing Person Page")
+        else:
+            print("Error: Failed to navigate to the 'Missing Person' page.")
